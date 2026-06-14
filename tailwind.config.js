@@ -1,84 +1,49 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+	darkMode: 'class',
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
-		// --- Sistema Metro UI 2026 × Glass Emerald ---
-		// Sin sombras, sin gradientes (salvo emerald-divider), sin border-radius.
 		extend: {
 			colors: {
-				bg: '#FFFFFF',
-				fg: '#111111',
-				blue: '#0078D7',
-				'blue-dark': '#005A9E',
-				cyan: '#00BCF2',
-				'cyan-dark': '#0097C2',
-				green: '#00A300',
-				'green-dark': '#007A00',
-				orange: '#F7630C',
-				'orange-dark': '#C44D09',
-				red: '#E81123',
-				'red-dark': '#B50E1C',
-				caption: '#555555',
-				// Glass Emerald — sistema de énfasis
-				emerald: '#00C896',
-				'emerald-deep': '#007A5C'
+				primary: '#0A1628',
+				secondary: '#0F2040',
+				accent: '#F59E0B',
+				accent2: '#0EA5E9',
+				accent3: '#8B5CF6',
+				accentAI: '#10B981',
+				surface: '#F8FAFC',
+				ink: '#E2E8F0',
+				muted: '#64748B',
+				glass: 'rgba(255,255,255,0.06)',
+				glassBorder: 'rgba(255,255,255,0.12)',
+				aiGlow: 'rgba(16,185,129,0.15)'
 			},
 			fontFamily: {
-				sans: [
-					'Inter',
-					'Segoe UI',
-					'ui-sans-serif',
-					'system-ui',
-					'-apple-system',
-					'sans-serif'
-				]
-			},
-			fontWeight: {
-				light: '300'
-			},
-			// Geometría Metro: ángulos rectos en todo.
-			borderRadius: {
-				none: '0',
-				DEFAULT: '0',
-				sm: '0',
-				md: '0',
-				lg: '0',
-				xl: '0',
-				'2xl': '0',
-				'3xl': '0',
-				full: '0'
-			},
-			boxShadow: {
-				none: 'none'
-			},
-			// Animaciones lineales / intencionales (Windows 8).
-			transitionTimingFunction: {
-				metro: 'cubic-bezier(0.0, 0.0, 0.2, 1)'
-			},
-			transitionDuration: {
-				150: '150ms'
+				sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif']
 			},
 			keyframes: {
-				'slide-in-metro': {
-					from: { transform: 'translateX(-24px)', opacity: '0' },
-					to: { transform: 'translateX(0)', opacity: '1' }
+				ticker: {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(-50%)' }
 				},
-				'emerald-appear': {
-					from: {
-						transform: 'translateX(-16px)',
-						opacity: '0',
-						boxShadow: '0 0 0px rgba(0,200,150,0)'
-					},
-					to: {
-						transform: 'translateX(0)',
-						opacity: '1',
-						boxShadow: '0 0 24px rgba(0,200,150,0.15)'
-					}
+				float: {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-8px)' }
+				},
+				'city-in': {
+					from: { opacity: '0', transform: 'translateY(12px)' },
+					to: { opacity: '1', transform: 'translateY(0)' }
+				},
+				'city-out': {
+					from: { opacity: '1', transform: 'translateY(0)' },
+					to: { opacity: '0', transform: 'translateY(-12px)' }
 				}
 			},
 			animation: {
-				'slide-in-metro': 'slide-in-metro 200ms linear both',
-				'emerald-appear': 'emerald-appear 220ms cubic-bezier(0.0,0.0,0.2,1) both'
+				ticker: 'ticker 30s linear infinite',
+				float: 'float 6s ease-in-out infinite',
+				'city-in': 'city-in 0.5s cubic-bezier(0.4,0,0.2,1) both',
+				'city-out': 'city-out 0.4s cubic-bezier(0.4,0,0.2,1) both'
 			}
 		}
 	},

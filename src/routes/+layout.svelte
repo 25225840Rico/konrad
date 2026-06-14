@@ -2,14 +2,15 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import LoadingScreen from '$lib/components/LoadingScreen.svelte';
+	import Navbar from '$lib/components/Navbar.svelte';
+	import WhatsAppButton from '$lib/components/WhatsAppButton.svelte';
+	import Footer from '$lib/components/Footer.svelte';
 
 	let { children } = $props();
 
 	let loaded = $state(false);
 
 	onMount(() => {
-		// Scroll nativo (sin Lenis): el sistema Metro privilegia transiciones
-		// lineales e intencionales, no scroll cinematográfico decorativo.
 		// Navegación suave a anclas internas (#id) respetando reduce-motion.
 		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -34,4 +35,9 @@
 	<LoadingScreen onDone={() => (loaded = true)} />
 {/if}
 
+<Navbar />
+<WhatsAppButton />
+
 {@render children()}
+
+<Footer />

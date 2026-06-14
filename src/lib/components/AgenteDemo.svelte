@@ -4,8 +4,7 @@
 	import Icon from '$lib/Icon.svelte';
 	import { agentChips, agentSystemPrompt, waLink } from '$lib/data';
 	import { env } from '$env/dynamic/public';
-	// $env/dynamic/public no rompe el build si la variable no está definida
-	// (en CI/GitHub Pages no existe .env). Si falta, el chat muestra un aviso.
+
 	const PUBLIC_ANTHROPIC_KEY = env.PUBLIC_ANTHROPIC_KEY;
 
 	// --- Types ---
@@ -22,7 +21,6 @@
 	let error = $state('');
 	let input = $state('');
 
-	// Ref for the scroll container
 	let scrollEl = $state<HTMLDivElement | undefined>(undefined);
 
 	async function scrollToBottom() {
@@ -39,11 +37,9 @@
 		error = '';
 		input = '';
 
-		// Append user message
 		messages = [...messages, { role: 'user', content: trimmed }];
 		await scrollToBottom();
 
-		// Guard: unconfigured key
 		if (!PUBLIC_ANTHROPIC_KEY || PUBLIC_ANTHROPIC_KEY === 'tu_key_aqui') {
 			error = 'El asistente no está configurado. Escríbenos por WhatsApp.';
 			loading = false;
@@ -98,7 +94,6 @@
 </script>
 
 <style>
-	/* Typing indicator — 3 puntos, animación lineal sin rebote */
 	@keyframes typing-dot {
 		0%, 80%, 100% { transform: translateY(0); opacity: 0.35; }
 		40% { transform: translateY(-5px); opacity: 1; }
@@ -106,6 +101,7 @@
 	.dot {
 		width: 6px;
 		height: 6px;
+		border-radius: 50%;
 		background: currentColor;
 		display: inline-block;
 		animation: typing-dot 1.1s linear infinite;
@@ -113,43 +109,52 @@
 	.dot:nth-child(2) { animation-delay: 0.18s; }
 	.dot:nth-child(3) { animation-delay: 0.36s; }
 
-	/* Campo de input sobre fondo oscuro — borde inferior blanco */
-	.field-dark {
+	.field-ai {
 		width: 100%;
 		border: 0;
 		background: transparent;
 		padding: 12px 0;
-		color: #ffffff;
-		border-bottom: 1px solid rgba(255,255,255,0.4);
+		color: #E2E8F0;
+		border-bottom: 1px solid rgba(16, 185, 129, 0.3);
 		border-radius: 0;
 		transition: border-color 150ms linear;
 		font-size: 0.875rem;
 	}
-	.field-dark::placeholder {
-		color: rgba(255,255,255,0.35);
+	.field-ai::placeholder {
+		color: rgba(226, 232, 240, 0.35);
 	}
-	.field-dark:focus {
+	.field-ai:focus {
 		outline: none;
-		border-bottom-color: #00c896;
+		border-bottom-color: #10B981;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.dot {
+			animation: none;
+			opacity: 0.6;
+		}
 	}
 </style>
 
-<section id="agente" class="bg-fg py-20 lg:py-28">
+<section id="agente-demo" class="bg-ai-section py-20 lg:py-28">
 	<div class="container-w">
 
 		<!-- Header -->
-		<div class="mb-10 max-w-xl">
-			<span class="eyebrow" style="color:#00c896;">Demo en vivo</span>
-			<h2 class="mt-3 text-3xl font-normal text-white lg:text-4xl">
+		<div class="mb-10 max-w-xl reveal">
+			<span class="eyebrow" style="color: #10B981;">
+				<span class="badge-live inline-block w-2 h-2 rounded-full bg-accentAI mr-1"></span>
+				Demo en vivo
+			</span>
+			<h2 class="mt-3 text-3xl font-normal text-ink lg:text-4xl">
 				Pruebe nuestra IA ahora mismo
 			</h2>
-			<p class="mt-4 text-base" style="color:#999;">
+			<p class="mt-4 text-base text-muted">
 				Este agente conoce todos los servicios de CoreWerk. Pregúntele lo que necesita.
 			</p>
 		</div>
 
-		<!-- Chat container — glass-emerald-dark como única excepción glass -->
-		<div class="mx-auto max-w-2xl glass-emerald-dark p-4 sm:p-6">
+		<!-- Chat container -->
+		<div class="mx-auto max-w-2xl glass-card-ai p-4 sm:p-6 ai-glow">
 
 			<!-- Chips -->
 			{#if messages.length === 0}
@@ -159,12 +164,8 @@
 							type="button"
 							onclick={() => send(chip)}
 							disabled={loading}
-							class="border px-3 py-1.5 text-sm font-normal transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40"
-							style="border-color:rgba(0,200,150,0.5); color:#00c896; background:transparent;"
-							onmouseover={(e) => { (e.currentTarget as HTMLButtonElement).style.background='rgba(0,200,150,0.12)'; }}
-							onmouseout={(e) => { (e.currentTarget as HTMLButtonElement).style.background='transparent'; }}
-							onfocus={(e) => { (e.currentTarget as HTMLButtonElement).style.background='rgba(0,200,150,0.12)'; }}
-							onblur={(e) => { (e.currentTarget as HTMLButtonElement).style.background='transparent'; }}
+							class="glass-nav px-3 py-1.5 text-sm font-normal text-accentAI transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40"
+							style="border-color: rgba(16,185,129,0.3); color: #10B981;"
 						>
 							{chip}
 						</button>
@@ -178,42 +179,35 @@
 				class="mb-5 flex max-h-[400px] min-h-[200px] flex-col gap-3 overflow-y-auto no-scrollbar pr-1"
 			>
 				{#if messages.length === 0 && !loading}
-					<p class="m-auto text-sm" style="color:rgba(255,255,255,0.3);">
+					<p class="m-auto text-sm text-muted">
 						Haga una pregunta o elija una opción arriba.
 					</p>
 				{/if}
 
 				{#each messages as msg, i (i)}
 					{#if msg.role === 'user'}
-						<!-- Burbuja usuario: derecha, bg-blue recto -->
+						<!-- Burbuja usuario: derecha, bg-accent text-primary -->
 						<div
 							class="flex justify-end"
 							in:fly={{ y: 10, duration: 200, easing: (t) => t }}
 						>
-							<div
-								class="max-w-[80%] px-4 py-2.5 text-sm text-white"
-								style="background:#0078d7;"
-							>
+							<div class="max-w-[80%] px-4 py-2.5 text-sm bg-accent text-primary">
 								{msg.content}
 							</div>
 						</div>
 					{:else}
-						<!-- Burbuja agente: izquierda, panel sólido oscuro -->
+						<!-- Burbuja agente: izquierda, glass-card-ai + avatar CW verde -->
 						<div
 							class="flex items-start gap-3"
 							in:fly={{ y: 10, duration: 200, easing: (t) => t }}
 						>
-							<!-- Avatar cuadrado "CW" -->
+							<!-- Avatar "CW" -->
 							<div
-								class="flex h-7 w-7 shrink-0 items-center justify-center text-xs font-bold"
-								style="background:#00c896; color:#111;"
+								class="flex h-7 w-7 shrink-0 items-center justify-center text-xs font-bold bg-accentAI text-primary"
 							>
 								CW
 							</div>
-							<div
-								class="max-w-[80%] px-4 py-2.5 text-sm"
-								style="background:#1a1a1a; color:#e5e5e5;"
-							>
+							<div class="glass-card-ai max-w-[80%] px-4 py-2.5 text-sm text-ink">
 								{msg.content}
 							</div>
 						</div>
@@ -223,16 +217,10 @@
 				<!-- Typing indicator -->
 				{#if loading}
 					<div class="flex items-start gap-3" in:fly={{ y: 8, duration: 180, easing: (t) => t }}>
-						<div
-							class="flex h-7 w-7 shrink-0 items-center justify-center text-xs font-bold"
-							style="background:#00c896; color:#111;"
-						>
+						<div class="flex h-7 w-7 shrink-0 items-center justify-center text-xs font-bold bg-accentAI text-primary">
 							CW
 						</div>
-						<div
-							class="flex items-center gap-1.5 px-4 py-3"
-							style="background:#1a1a1a; color:rgba(255,255,255,0.4);"
-						>
+						<div class="glass-card-ai flex items-center gap-1.5 px-4 py-3 text-accentAI">
 							<span class="dot"></span>
 							<span class="dot"></span>
 							<span class="dot"></span>
@@ -245,7 +233,7 @@
 			{#if error}
 				<div
 					class="mb-4 border px-4 py-2.5 text-sm"
-					style="border-color:rgba(232,17,35,0.4); background:rgba(232,17,35,0.12); color:#ff6b6b;"
+					style="border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.1); color: #FCA5A5;"
 				>
 					{error}
 					{#if error.includes('WhatsApp')}
@@ -253,7 +241,7 @@
 							href={waLink('Hola CoreWerk, quiero consultar sobre sus servicios.')}
 							target="_blank"
 							rel="noopener"
-							class="ml-2 underline hover:text-white"
+							class="ml-2 underline hover:text-ink"
 						>Ir a WhatsApp</a>
 					{/if}
 				</div>
@@ -268,7 +256,7 @@
 						onkeydown={handleKeydown}
 						disabled={loading}
 						placeholder="Escribe tu pregunta…"
-						class="field-dark"
+						class="field-ai"
 					/>
 				</div>
 				<button
@@ -276,16 +264,12 @@
 					onclick={() => send(input)}
 					disabled={loading || !input.trim()}
 					aria-label="Enviar mensaje"
-					class="flex h-10 w-10 shrink-0 items-center justify-center transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-40"
-					style="background:#00c896; color:#111;"
-					onmouseover={(e) => { if (!loading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background='#007a5c'; (e.currentTarget as HTMLButtonElement).style.color='#fff'; }}
-					onmouseout={(e) => { (e.currentTarget as HTMLButtonElement).style.background='#00c896'; (e.currentTarget as HTMLButtonElement).style.color='#111'; }}
-					onfocus={(e) => { if (!loading && input.trim()) (e.currentTarget as HTMLButtonElement).style.background='#007a5c'; }}
-					onblur={(e) => { (e.currentTarget as HTMLButtonElement).style.background='#00c896'; (e.currentTarget as HTMLButtonElement).style.color='#111'; }}
+					class="btn-ai flex h-10 w-10 shrink-0 items-center justify-center p-0 disabled:cursor-not-allowed disabled:opacity-40"
 				>
 					<Icon name="send" class="h-4 w-4" />
 				</button>
 			</div>
 		</div>
+
 	</div>
 </section>

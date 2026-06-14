@@ -3,6 +3,7 @@
 	import { contact, projectTypes } from '$lib/data';
 	import { reveal } from '$lib/reveal';
 	import { WA_LINK } from '$lib/seo/site';
+	import Icon from '$lib/Icon.svelte';
 
 	let name = $state('');
 	let company = $state('');
@@ -33,90 +34,78 @@
 	}
 </script>
 
-<section id="contacto" class="bg-white py-24 lg:py-32">
+<section id="contacto" class="py-20 lg:py-24">
 	<div class="container-w">
-		<div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
-			<!-- Columna Izquierda: Título + Divider + CTA WhatsApp prominente -->
-			<div class="flex flex-col justify-start" use:reveal>
-				<h2 class="text-6xl font-light leading-tight text-fg lg:text-7xl">HABLEMOS.</h2>
-				<div class="emerald-divider my-6"></div>
+		<div class="reveal mb-16 text-center" use:reveal>
+			<span class="eyebrow">Contacto</span>
+			<h2 class="mt-3 text-2xl font-normal tracking-tight sm:text-3xl">
+				Hablemos
+			</h2>
+		</div>
 
-				<!-- CTA WhatsApp Grande y Prominente -->
-				<div class="mt-8 flex flex-col gap-4 border border-fg bg-green p-8 text-white">
-					<h3 class="text-lg font-normal">O escríbanos directo por WhatsApp</h3>
-					<p class="text-sm">Diagnóstico gratuito de su operación en menos de 24 horas.</p>
-					<a
-						href={WA_LINK}
-						target="_blank"
-						rel="noopener"
-						class="btn-primary mt-4"
-					>
-						Escribir por WhatsApp →
-					</a>
-				</div>
-
-				<!-- Datos de contacto en texto plano -->
-				<div class="mt-12 space-y-4 text-sm text-fg">
-					<div>
-						<p class="font-normal">Email</p>
-						<a href={`mailto:${contact.email}`} class="text-emerald-base hover:underline">
-							{contact.email}
-						</a>
-					</div>
-					<div>
-						<p class="font-normal">Ubicación</p>
-						<p class="text-caption">{contact.city}</p>
-					</div>
-					<div>
-						<p class="font-normal">Horario</p>
-						<p class="text-caption">{contact.hours}</p>
-					</div>
-				</div>
-			</div>
-
-			<!-- Columna Derecha: Formulario -->
-			<div use:reveal>
+		<div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+			<!-- Columna Izquierda: Formulario -->
+			<div class="reveal" use:reveal>
 				{#if status === 'success'}
 					<div
 						transition:fade={{ duration: 300 }}
-						class="border border-emerald-base bg-white p-6 text-center"
+						class="glass-card flex items-center justify-center p-8 text-center"
 						role="alert"
 					>
-						<p class="font-normal text-fg">¡Gracias! Le responderemos dentro de 24 horas.</p>
+						<p class="text-ink">¡Gracias! Le responderemos dentro de 24 horas.</p>
 					</div>
 				{:else}
-					<form onsubmit={handleSubmit} novalidate class="flex flex-col gap-6">
+					<form onsubmit={handleSubmit} novalidate class="glass-card flex flex-col gap-6 p-8 lg:p-10">
 						<!-- Nombre -->
 						<div>
-							<label for="c-name" class="field-label">
-								Nombre <span class="text-red">*</span>
+							<label for="c-name" class="block text-sm font-semibold text-ink mb-2">
+								Nombre <span class="text-accent">*</span>
 							</label>
 							<input
 								id="c-name"
 								type="text"
 								bind:value={name}
-								class="field"
+								class="w-full bg-transparent border-b border-white/20 px-0 py-2 text-ink focus:border-accent focus:outline-none transition-colors"
 								autocomplete="name"
 							/>
-							{#if errors.name}<p class="mt-2 text-sm text-red">{errors.name}</p>{/if}
+							{#if errors.name}<p class="mt-2 text-xs text-accent">{errors.name}</p>{/if}
 						</div>
 
 						<!-- Empresa -->
 						<div>
-							<label for="c-company" class="field-label">Empresa</label>
+							<label for="c-company" class="block text-sm font-semibold text-ink mb-2">Empresa</label>
 							<input
 								id="c-company"
 								type="text"
 								bind:value={company}
-								class="field"
+								class="w-full bg-transparent border-b border-white/20 px-0 py-2 text-ink focus:border-accent focus:outline-none transition-colors"
 								autocomplete="organization"
 							/>
 						</div>
 
+						<!-- Email -->
+						<div>
+							<label for="c-email" class="block text-sm font-semibold text-ink mb-2">
+								Correo <span class="text-accent">*</span>
+							</label>
+							<input
+								id="c-email"
+								type="email"
+								bind:value={email}
+								class="w-full bg-transparent border-b border-white/20 px-0 py-2 text-ink focus:border-accent focus:outline-none transition-colors"
+								autocomplete="email"
+							/>
+							{#if errors.email}<p class="mt-2 text-xs text-accent">{errors.email}</p>{/if}
+						</div>
+
 						<!-- Industria (select) -->
 						<div>
-							<label for="c-industry" class="field-label">¿Qué necesita?</label>
-							<select id="c-industry" bind:value={industry} class="field appearance-none">
+							<label for="c-industry" class="block text-sm font-semibold text-ink mb-2">¿Qué necesita?</label>
+							<select
+								id="c-industry"
+								bind:value={industry}
+								class="w-full bg-transparent border-b border-white/20 px-0 py-2 text-ink focus:border-accent focus:outline-none transition-colors appearance-none"
+							>
 								<option value="">Seleccione una opción…</option>
 								{#each projectTypes as pt}
 									<option value={pt}>{pt}</option>
@@ -124,45 +113,63 @@
 							</select>
 						</div>
 
-						<!-- Email -->
-						<div>
-							<label for="c-email" class="field-label">
-								Correo <span class="text-red">*</span>
-							</label>
-							<input
-								id="c-email"
-								type="email"
-								bind:value={email}
-								class="field"
-								autocomplete="email"
-							/>
-							{#if errors.email}<p class="mt-2 text-sm text-red">{errors.email}</p>{/if}
-						</div>
-
 						<!-- Mensaje -->
 						<div>
-							<label for="c-message" class="field-label">
-								Mensaje <span class="text-red">*</span>
+							<label for="c-message" class="block text-sm font-semibold text-ink mb-2">
+								Mensaje <span class="text-accent">*</span>
 							</label>
 							<textarea
 								id="c-message"
-								rows={5}
+								rows={4}
 								bind:value={message}
-								class="field resize-none"
+								class="w-full bg-transparent border-b border-white/20 px-0 py-2 text-ink focus:border-accent focus:outline-none transition-colors resize-none"
 							></textarea>
-							{#if errors.message}<p class="mt-2 text-sm text-red">{errors.message}</p>{/if}
+							{#if errors.message}<p class="mt-2 text-xs text-accent">{errors.message}</p>{/if}
 						</div>
 
-						<!-- Botón ENVIAR (Glass Emerald) -->
+						<!-- Botón ENVIAR -->
 						<button
 							type="submit"
 							disabled={status === 'loading'}
-							class="btn-glass-emerald w-full py-4 disabled:cursor-not-allowed disabled:opacity-60"
+							class="btn-accent mt-4 w-full justify-center disabled:cursor-not-allowed disabled:opacity-60"
 						>
 							{status === 'loading' ? 'ENVIANDO…' : 'ENVIAR'}
 						</button>
 					</form>
 				{/if}
+			</div>
+
+			<!-- Columna Derecha: Datos contacto + CTA WhatsApp -->
+			<div class="reveal flex flex-col justify-start" use:reveal>
+				<!-- Datos de contacto -->
+				<div class="space-y-6 mb-8">
+					<div>
+						<h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-accent mb-2">Email</h3>
+						<a href={`mailto:${contact.email}`} class="text-ink hover:text-accent transition-colors">
+							{contact.email}
+						</a>
+					</div>
+					<div>
+						<h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-accent mb-2">Ubicación</h3>
+						<p class="text-ink">{contact.city}</p>
+					</div>
+					<div>
+						<h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-accent mb-2">Horario</h3>
+						<p class="text-ink">{contact.hours}</p>
+					</div>
+				</div>
+
+				<!-- CTA WhatsApp grande y prominente -->
+				<a
+					href={WA_LINK}
+					target="_blank"
+					rel="noopener"
+					class="btn-ai flex items-center justify-center gap-2 w-full py-3 px-6"
+				>
+					<Icon name="whatsapp" class="w-5 h-5" />
+					<span>O escríbanos directo por WhatsApp →</span>
+				</a>
+				<p class="mt-4 text-xs text-muted">Diagnóstico gratuito en menos de 24 horas</p>
 			</div>
 		</div>
 	</div>

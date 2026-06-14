@@ -23,7 +23,9 @@ const config = {
 			// pensadas para la home. En subpáginas no existen esos ids: se ignora.
 			handleMissingId: 'warn',
 			// /blog/[slug] no genera entradas mientras blogPosts esté vacío: se ignora.
-			handleUnseenRoutes: 'warn'
+			handleUnseenRoutes: 'warn',
+			// /nosotros/ y otras rutas referenciadas aún no creadas: warn en vez de fail.
+			handleHttpError: 'warn'
 		}
 	}
 };
