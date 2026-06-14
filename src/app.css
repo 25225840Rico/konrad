@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-surface text-ink;
+	}
+
+	/* Foco visible accesible en todos los elementos interactivos */
+	a:focus-visible,
+	button:focus-visible,
+	input:focus-visible,
+	select:focus-visible,
+	textarea:focus-visible {
+		@apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-white;
+	}
+}
+
+@layer utilities {
+	/* Scroll horizontal sin barra visible (pills del hero) */
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Patrón de puntos sutil para fondos oscuros */
+	.dot-pattern {
+		background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+		background-size: 22px 22px;
+	}
+
+	/* Animación base para fade-in con IntersectionObserver.
+	   Los componentes añaden la clase .is-visible cuando entran al viewport. */
+	.reveal {
+		opacity: 0;
+		transform: translateY(20px);
+		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	}
+	.reveal.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Respeta usuarios que prefieren menos movimiento */
+	@media (prefers-reduced-motion: reduce) {
+		.reveal {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+		html {
+			scroll-behavior: auto;
+		}
+	}
+}
