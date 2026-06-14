@@ -1,110 +1,79 @@
 <script lang="ts">
 	import Icon from '$lib/Icon.svelte';
 	import { reveal } from '$lib/reveal';
-	import { heroPills, WA_LINK } from '$lib/data';
+	import { waLink, WA_LINK } from '$lib/data';
 
-	const stats = [
-		{ value: '7 días', label: 'Entrega promedio' },
-		{ value: '5', label: 'Unidades de negocio' },
-		{ value: '24h', label: 'Primera respuesta' }
+	// Mosaico de tiles: A=globe (glass emerald), B=automation, C=cpu, D=dashboard, E=megaphone
+	// Un tile usa tile-glass-emerald (globe), el resto colores sólidos.
+	const mosaic = [
+		{ icon: 'automation', label: 'Automatización', color: 'tile-blue', href: '#servicios', wide: false },
+		{ icon: 'globe',      label: 'Presencia Digital', color: 'tile-glass-emerald', href: '#servicios', wide: false, emerald: true },
+		{ icon: 'cpu',        label: 'Inteligencia Artificial', color: 'tile-dark', href: '#servicios', wide: true },
+		{ icon: 'dashboard',  label: 'Sistemas', color: 'tile-cyan', href: '#servicios', wide: false },
+		{ icon: 'megaphone',  label: 'Marketing B2B', color: 'tile-orange', href: '#servicios', wide: false },
 	];
-
-	const deco = ['globe', 'automation', 'cpu', 'dashboard'];
 </script>
 
-<section id="inicio" class="relative overflow-hidden bg-primary text-white">
-	<!-- Patrón de puntos + glows -->
-	<div class="dot-pattern absolute inset-0 opacity-60" aria-hidden="true"></div>
-	<div
-		class="pointer-events-none absolute inset-0"
-		style="background:
-			radial-gradient(40rem 30rem at 85% -10%, rgba(245,158,11,0.18), transparent 60%),
-			radial-gradient(40rem 30rem at 0% 110%, rgba(14,165,233,0.16), transparent 60%);"
-		aria-hidden="true"
-	></div>
+<section id="inicio" class="bg-bg text-fg">
+	<div class="container-w py-20 lg:py-24">
+		<div class="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
 
-	<div class="container-w relative grid items-center gap-12 py-28 lg:grid-cols-12 lg:py-36">
-		<!-- Columna texto -->
-		<div class="lg:col-span-7">
-			<span class="reveal chip border-accent/40 bg-accent/10 text-accent" use:reveal>
-				<Icon name="map" class="h-3.5 w-3.5" /> Antofagasta · Norte de Chile
-			</span>
+			<!-- Columna izquierda: texto -->
+			<div>
+				<span class="eyebrow reveal" use:reveal>Antofagasta · Norte de Chile</span>
 
-			<h1
-				class="reveal mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl"
-				use:reveal
-			>
-				Tecnología que <span class="text-accent">trabaja en faena</span>
-			</h1>
+				<h1 class="reveal mt-6 text-7xl font-light leading-[1.05] tracking-tight lg:text-8xl" use:reveal>
+					Tecnología que trabaja en faena
+				</h1>
 
-			<p class="reveal mt-6 max-w-xl text-lg text-white/70" use:reveal>
-				Automatización, sitios web, IA y sistemas digitales para empresas de minería, transporte y
-				servicios industriales.
-			</p>
+				<p class="reveal mt-6 text-lg text-caption" use:reveal>
+					Automatización, sitios web, IA y sistemas digitales para minería, transporte y servicios industriales.
+				</p>
 
-			<div class="reveal mt-8 flex flex-wrap gap-3" use:reveal>
-				<a href="#servicios" class="btn-accent">Ver servicios →</a>
-				<a href={WA_LINK} target="_blank" rel="noopener" class="btn-ghost-light">
-					<Icon name="zap" class="h-4 w-4" /> WhatsApp directo
-				</a>
+				<div class="reveal mt-8 flex flex-wrap gap-4" use:reveal>
+					<a href="#servicios" class="btn-glass-emerald">Ver servicios</a>
+					<a href={WA_LINK} target="_blank" rel="noopener" class="btn-secondary">
+						<Icon name="zap" class="w-4 h-4" /> WhatsApp directo
+					</a>
+				</div>
 			</div>
 
-			<!-- Stats -->
-			<div class="reveal mt-12 grid max-w-lg grid-cols-3 gap-6" use:reveal>
-				{#each stats as s}
-					<div>
-						<div class="text-2xl font-extrabold text-white sm:text-3xl">{s.value}</div>
-						<div class="mt-1 text-xs text-white/55">{s.label}</div>
-					</div>
-				{/each}
-			</div>
-		</div>
+			<!-- Columna derecha: mosaico de tiles -->
+			<div class="reveal" use:reveal>
+				<div class="grid grid-cols-2 gap-2">
+					<!-- Fila 1: automation (1x1) + globe tile-glass-emerald (1x1) -->
+					<a href={mosaic[0].href} class="tile {mosaic[0].color} aspect-square min-h-[140px]">
+						<Icon name={mosaic[0].icon} class="w-8 h-8" />
+						<span class="mt-auto text-sm font-normal leading-tight">{mosaic[0].label}</span>
+					</a>
 
-		<!-- Columna decorativa: grid de íconos -->
-		<div class="reveal hidden lg:col-span-5 lg:block" use:reveal>
-			<div class="grid grid-cols-2 gap-4">
-				{#each deco as d, i}
-					<div
-						class="float-tile flex aspect-square items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur"
-						style="animation-delay: {i * 0.6}s;"
+					<a
+						href={mosaic[1].href}
+						class="tile {mosaic[1].color} aspect-square min-h-[140px] animate-emerald-appear"
 					>
-						<Icon name={d} class="h-12 w-12 text-accent2" />
-					</div>
-				{/each}
-			</div>
-		</div>
-	</div>
+						<Icon name={mosaic[1].icon} class="w-8 h-8 text-emerald" />
+						<span class="mt-auto text-sm font-normal leading-tight text-emerald">{mosaic[1].label}</span>
+					</a>
 
-	<!-- Pills de industrias -->
-	<div class="container-w relative pb-12">
-		<div class="no-scrollbar flex gap-2.5 overflow-x-auto pb-1">
-			{#each heroPills as pill}
-				<span
-					class="whitespace-nowrap rounded-full border border-white/15 bg-white/[0.04] px-4 py-1.5 text-sm text-white/75"
-				>
-					{pill}
-				</span>
-			{/each}
+					<!-- Fila 2: cpu wide (col-span-2) -->
+					<a href={mosaic[2].href} class="tile {mosaic[2].color} col-span-2 min-h-[100px] flex-row items-center gap-4">
+						<Icon name={mosaic[2].icon} class="w-8 h-8 shrink-0" />
+						<span class="text-sm font-normal">{mosaic[2].label}</span>
+					</a>
+
+					<!-- Fila 3: dashboard (1x1) + megaphone (1x1) -->
+					<a href={mosaic[3].href} class="tile {mosaic[3].color} aspect-square min-h-[120px]">
+						<Icon name={mosaic[3].icon} class="w-8 h-8" />
+						<span class="mt-auto text-sm font-normal leading-tight">{mosaic[3].label}</span>
+					</a>
+
+					<a href={mosaic[4].href} class="tile {mosaic[4].color} aspect-square min-h-[120px]">
+						<Icon name={mosaic[4].icon} class="w-8 h-8" />
+						<span class="mt-auto text-sm font-normal leading-tight">{mosaic[4].label}</span>
+					</a>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </section>
-
-<style>
-	.float-tile {
-		animation: float 6s ease-in-out infinite;
-	}
-	@keyframes float {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-8px);
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.float-tile {
-			animation: none;
-		}
-	}
-</style>

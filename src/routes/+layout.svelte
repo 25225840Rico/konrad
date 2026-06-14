@@ -1,52 +1,37 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import LoadingScreen from '$lib/components/LoadingScreen.svelte';
 
 	let { children } = $props();
 
+	let loaded = $state(false);
+
 	onMount(() => {
-		// Smooth scroll cinematográfico con Lenis. Se desactiva si el usuario
-		// prefiere menos movimiento (accesibilidad) o en pantallas táctiles pequeñas.
+		// Scroll nativo (sin Lenis): el sistema Metro privilegia transiciones
+		// lineales e intencionales, no scroll cinematográfico decorativo.
+		// Navegación suave a anclas internas (#id) respetando reduce-motion.
 		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduce) return;
 
-		let lenis: { raf: (t: number) => void; destroy: () => void; scrollTo: (t: string | number | HTMLElement, o?: Record<string, unknown>) => void } | null = null;
-		let rafId = 0;
-		let cleanupAnchors: (() => void) | undefined;
-
-		// Import dinámico: no bloquea el render inicial (Core Web Vitals).
-		import('lenis').then(({ default: Lenis }) => {
-			lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-
-			const raf = (time: number) => {
-				lenis?.raf(time);
-				rafId = requestAnimationFrame(raf);
-			};
-			rafId = requestAnimationFrame(raf);
-
-			// Navegación suave a anclas internas (#id) de la misma página.
-			const onClick = (e: MouseEvent) => {
-				const target = (e.target as HTMLElement)?.closest('a');
-				if (!target) return;
-				const href = target.getAttribute('href') ?? '';
-				if (href.startsWith('#') && href.length > 1) {
-					const el = document.querySelector(href);
-					if (el) {
-						e.preventDefault();
-						lenis?.scrollTo(el as HTMLElement, { offset: -90 });
-					}
+		const onClick = (e: MouseEvent) => {
+			const target = (e.target as HTMLElement)?.closest('a');
+			if (!target) return;
+			const href = target.getAttribute('href') ?? '';
+			if (href.startsWith('#') && href.length > 1) {
+				const el = document.querySelector(href);
+				if (el) {
+					e.preventDefault();
+					el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
 				}
-			};
-			document.addEventListener('click', onClick);
-			cleanupAnchors = () => document.removeEventListener('click', onClick);
-		});
-
-		return () => {
-			cancelAnimationFrame(rafId);
-			cleanupAnchors?.();
-			lenis?.destroy();
+			}
 		};
+		document.addEventListener('click', onClick);
+		return () => document.removeEventListener('click', onClick);
 	});
 </script>
+
+{#if !loaded}
+	<LoadingScreen onDone={() => (loaded = true)} />
+{/if}
 
 {@render children()}

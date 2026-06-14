@@ -1,41 +1,33 @@
 <script lang="ts">
-	import Icon from '$lib/Icon.svelte';
 	import { contact } from '$lib/data';
 	import { units } from '$lib/data';
 
 	const year = new Date().getFullYear();
 </script>
 
-<footer class="bg-primary text-white">
-	<div class="container-w py-16">
-		<div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+<footer class="border-t border-fg bg-white text-fg">
+	<div class="container-w py-20">
+		<div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
 			<!-- Marca -->
 			<div>
-				<p class="text-xl font-extrabold">Core<span class="text-accent">·</span>Werk</p>
-				<p class="mt-2 text-sm text-white/60">Tecnología que trabaja en faena.</p>
-				<p class="mt-4 text-xs text-white/45">
+				<p class="text-xl font-light">Core<span class="text-emerald-base">·</span>Werk</p>
+				<p class="mt-3 text-sm text-caption">Tecnología que trabaja en faena.</p>
+				<p class="mt-4 text-xs text-caption">
 					Unidad tecnológica de CoreService<br />Antofagasta, Chile
 				</p>
-				<div class="mt-5 flex gap-4">
-					<a
-						href="https://www.linkedin.com/company/corewerk"
-						target="_blank"
-						rel="noopener"
-						aria-label="LinkedIn de CoreWerk"
-						class="text-white/60 transition-colors duration-120 hover:text-accent"
-					>
-						<Icon name="linkedin" class="h-5 w-5" label="LinkedIn" />
-					</a>
-				</div>
 			</div>
 
 			<!-- Servicios -->
 			<div>
-				<h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Servicios</h3>
-				<ul class="mt-4 space-y-2 text-sm text-white/65">
+				<h3 class="text-xs font-normal uppercase tracking-[0.18em] text-caption">Servicios</h3>
+				<ul class="mt-4 space-y-2 text-sm text-fg">
 					{#each units as u}
 						<li>
-							<a href="#servicios" class="transition-colors duration-120 hover:text-white">{u.name}</a>
+							<a
+								href="#servicios"
+								class="transition-colors duration-150 hover:underline hover:decoration-emerald-base"
+								>{u.name}</a
+							>
 						</li>
 					{/each}
 				</ul>
@@ -43,25 +35,46 @@
 
 			<!-- Empresa -->
 			<div>
-				<h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Empresa</h3>
-				<ul class="mt-4 space-y-2 text-sm text-white/65">
-					<li><a href="#industrias" class="transition-colors duration-120 hover:text-white">Industrias</a></li>
-					<li><a href="#proceso" class="transition-colors duration-120 hover:text-white">Cómo trabajamos</a></li>
-					<li><a href="#casos" class="transition-colors duration-120 hover:text-white">Casos</a></li>
-					<li><a href="#precios" class="transition-colors duration-120 hover:text-white">Precios</a></li>
+				<h3 class="text-xs font-normal uppercase tracking-[0.18em] text-caption">Empresa</h3>
+				<ul class="mt-4 space-y-2 text-sm text-fg">
+					<li>
+						<a
+							href="#industrias"
+							class="transition-colors duration-150 hover:underline hover:decoration-emerald-base"
+							>Industrias</a
+						>
+					</li>
+					<li>
+						<a
+							href="#proceso"
+							class="transition-colors duration-150 hover:underline hover:decoration-emerald-base"
+							>Cómo trabajamos</a
+						>
+					</li>
+					<li>
+						<a
+							href="#casos"
+							class="transition-colors duration-150 hover:underline hover:decoration-emerald-base"
+							>Casos</a
+						>
+					</li>
+					<li>
+						<a
+							href="#precios"
+							class="transition-colors duration-150 hover:underline hover:decoration-emerald-base"
+							>Precios</a
+						>
+					</li>
 				</ul>
 			</div>
 
 			<!-- Contacto -->
 			<div>
-				<h3 class="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Contacto</h3>
-				<ul class="mt-4 space-y-3 text-sm text-white/65">
+				<h3 class="text-xs font-normal uppercase tracking-[0.18em] text-caption">Contacto</h3>
+				<ul class="mt-4 space-y-2 text-sm text-fg">
 					<li>
-						<a
-							href={`mailto:${contact.email}`}
-							class="flex items-center gap-2 transition-colors duration-120 hover:text-accent"
-						>
-							<Icon name="mail" class="h-4 w-4 shrink-0" /> {contact.email}
+						<a href={`mailto:${contact.email}`} class="hover:underline hover:decoration-emerald-base">
+							{contact.email}
 						</a>
 					</li>
 					<li>
@@ -69,19 +82,17 @@
 							href={contact.whatsapp}
 							target="_blank"
 							rel="noopener"
-							class="flex items-center gap-2 transition-colors duration-120 hover:text-accent"
+							class="hover:underline hover:decoration-emerald-base"
 						>
-							<Icon name="zap" class="h-4 w-4 shrink-0" /> {contact.whatsappLabel}
+							{contact.whatsappLabel}
 						</a>
 					</li>
-					<li class="flex items-center gap-2">
-						<Icon name="map" class="h-4 w-4 shrink-0" /> {contact.city}
-					</li>
+					<li class="text-caption">{contact.city}</li>
 				</ul>
 			</div>
 		</div>
 
-		<div class="mt-12 border-t border-white/10 pt-6 text-center text-sm text-white/45">
+		<div class="mt-12 border-t border-fg pt-6 text-center text-xs text-caption">
 			© {year} CoreWerk · Antofagasta, Chile · Todos los derechos reservados
 		</div>
 	</div>

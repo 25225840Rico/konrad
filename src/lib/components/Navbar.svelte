@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
 	import Icon from '$lib/Icon.svelte';
 	import { WA_LINK } from '$lib/seo/site';
 
@@ -26,29 +25,26 @@
 </script>
 
 <header
-	class="fixed inset-x-0 top-0 z-40 transition-all duration-300 {scrolled
-		? 'border-b border-line bg-white/90 shadow-card backdrop-blur'
-		: 'border-b border-transparent bg-transparent'}"
+	class="fixed inset-x-0 top-0 z-40 bg-bg border-b border-fg transition-colors duration-150"
+	style={scrolled ? 'background:#111; color:#fff;' : ''}
 >
 	<div class="container-w flex items-center justify-between py-3.5">
 		<!-- Logo -->
 		<a
 			href="#inicio"
-			class="text-xl font-extrabold tracking-tight transition-opacity duration-120 hover:opacity-80 {scrolled
-				? 'text-primary'
-				: 'text-white'}"
+			class="text-xl font-bold tracking-tight transition-colors duration-150"
+			style={scrolled ? 'color:#fff;' : 'color:#111;'}
 		>
-			Core<span class="text-accent">·</span>Werk
+			Core<span class="text-emerald">·</span>Werk
 		</a>
 
 		<!-- Desktop nav -->
-		<nav class="hidden items-center gap-7 lg:flex" aria-label="Navegación principal">
+		<nav class="hidden items-center gap-8 lg:flex" aria-label="Navegación principal">
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class="text-sm font-medium transition-colors duration-120 {scrolled
-						? 'text-muted hover:text-primary'
-						: 'text-white/80 hover:text-white'}"
+					class="text-sm font-normal transition-colors duration-150 border-b-2 border-transparent hover:border-emerald pb-0.5"
+					style={scrolled ? 'color:#ccc;' : 'color:#555;'}
 				>
 					{link.label}
 				</a>
@@ -57,14 +53,15 @@
 
 		<!-- Desktop CTA -->
 		<div class="hidden lg:block">
-			<a href={WA_LINK} target="_blank" rel="noopener" class="btn-accent px-4 py-2 text-sm">
+			<a href={WA_LINK} target="_blank" rel="noopener" class="btn-glass-emerald btn-glass-sm">
 				Cotizar gratis
 			</a>
 		</div>
 
 		<!-- Mobile hamburger -->
 		<button
-			class="rounded p-1 lg:hidden {scrolled ? 'text-primary' : 'text-white'}"
+			class="p-1 lg:hidden transition-colors duration-150"
+			style={scrolled ? 'color:#fff;' : 'color:#111;'}
 			onclick={() => (open = !open)}
 			aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
 			aria-expanded={open}
@@ -77,14 +74,14 @@
 		</button>
 	</div>
 
-	<!-- Mobile dropdown -->
+	<!-- Mobile panel -->
 	{#if open}
-		<div transition:slide={{ duration: 300 }} class="border-t border-line bg-white lg:hidden">
+		<div class="border-t border-fg bg-bg lg:hidden animate-slide-in-metro">
 			<nav class="container-w flex flex-col py-2" aria-label="Menú móvil">
 				{#each navLinks as link}
 					<a
 						href={link.href}
-						class="border-b border-line py-3 text-muted transition-colors duration-120 hover:text-primary"
+						class="border-b border-fg py-3 text-sm text-caption transition-colors duration-150 hover:text-fg hover:border-emerald"
 						onclick={() => (open = false)}
 					>
 						{link.label}
@@ -95,7 +92,7 @@
 						href={WA_LINK}
 						target="_blank"
 						rel="noopener"
-						class="btn-accent block w-full text-center"
+						class="btn-glass-emerald btn-glass-sm block w-full text-center"
 						onclick={() => (open = false)}
 					>
 						Cotizar gratis

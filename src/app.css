@@ -3,17 +3,31 @@
 @tailwind utilities;
 
 /* =====================================================================
-   COREWERK — Design System (B2B industrial · tema claro + marca oscura)
+   COREWERK — Metro UI 2026 × Glass Emerald
+   Sistema plano: sin sombras, sin gradientes, sin transparencias, sin
+   border-radius. El Glass Emerald es la ÚNICA excepción y funciona como
+   sistema de énfasis (4–6 puntos exactos en todo el sitio).
    ===================================================================== */
 
 @layer base {
 	:root {
-		--ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
-		--ease-spring-soft: cubic-bezier(0.34, 1.56, 0.64, 1);
-		--ease-exit: cubic-bezier(0.4, 0, 1, 1);
-		--dur-click: 90ms;
-		--dur-hover: 120ms;
-		--dur-panel: 300ms;
+		/* Metro */
+		--color-bg: #ffffff;
+		--color-fg: #111111;
+		--color-blue: #0078d7;
+		--color-cyan: #00bcf2;
+		--color-green: #00a300;
+		--color-orange: #f7630c;
+		--color-red: #e81123;
+
+		/* Glass Emerald — acento premium */
+		--emerald-base: #00c896;
+		--emerald-deep: #007a5c;
+		--emerald-glow: rgba(0, 200, 150, 0.18);
+		--emerald-border: rgba(0, 200, 150, 0.35);
+		--emerald-surface: rgba(0, 200, 150, 0.08);
+		--glass-bg: rgba(0, 200, 150, 0.1);
+		--glass-bg-dark: rgba(0, 30, 20, 0.55);
 	}
 
 	html {
@@ -21,116 +35,274 @@
 	}
 
 	body {
-		@apply bg-surface text-ink antialiased;
+		@apply bg-bg text-fg antialiased;
+		font-feature-settings: 'cv11', 'ss01';
 		min-height: 100vh;
 		overflow-x: hidden;
 	}
 
-	/* Foco visible accesible (WCAG 2.2) */
+	/* Foco visible accesible (WCAG 2.2) — recto, color emerald, sin glow. */
 	a:focus-visible,
 	button:focus-visible,
 	input:focus-visible,
 	select:focus-visible,
 	textarea:focus-visible,
 	[tabindex]:focus-visible {
-		outline: none;
-		box-shadow:
-			0 0 0 2px #fff,
-			0 0 0 4px #f59e0b;
-		border-radius: 0.5rem;
+		outline: 2px solid var(--emerald-base);
+		outline-offset: 2px;
+		border-radius: 0;
 	}
 
 	::selection {
-		background: rgba(245, 158, 11, 0.25);
-		color: #0a1628;
+		background: var(--emerald-base);
+		color: #ffffff;
 	}
 }
 
 @layer components {
-	/* Contenedor estándar de sección */
+	/* Contenedor de sección: márgenes 48px desktop / 24px mobile. */
 	.container-w {
-		@apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+		@apply mx-auto w-full max-w-[1280px] px-6 lg:px-12;
 	}
 
-	/* Tarjeta industrial: borde fino, sombra suave, hover con micro-elevación */
-	.card {
-		@apply rounded-2xl border border-line bg-white shadow-card;
-		transition:
-			transform var(--dur-hover) var(--ease-spring),
-			box-shadow var(--dur-hover) var(--ease-spring),
-			border-color var(--dur-hover) var(--ease-spring);
-	}
-	.card-hover:hover {
-		transform: translateY(-4px);
-		box-shadow:
-			0 8px 24px rgba(15, 23, 42, 0.08),
-			0 20px 48px rgba(15, 23, 42, 0.1);
-		border-color: rgba(14, 165, 233, 0.45);
-	}
-
-	/* CTA primario ámbar */
-	.btn-accent {
-		@apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 font-semibold text-primary;
-		transition:
-			transform var(--dur-click) var(--ease-spring),
-			box-shadow var(--dur-hover) var(--ease-spring),
-			filter var(--dur-hover) var(--ease-spring);
-	}
-	.btn-accent:hover {
-		filter: brightness(1.05);
-		box-shadow: 0 8px 30px rgba(245, 158, 11, 0.3);
-	}
-	.btn-accent:active {
-		transform: scale(0.97);
-	}
-
-	/* Botón outline (secundario, sobre claro) */
-	.btn-outline {
-		@apply inline-flex items-center justify-center gap-2 rounded-xl border border-line bg-white px-6 py-3 font-semibold text-ink;
-		transition:
-			transform var(--dur-click) var(--ease-spring),
-			background-color var(--dur-hover) var(--ease-spring),
-			border-color var(--dur-hover) var(--ease-spring);
-	}
-	.btn-outline:hover {
-		border-color: #cbd5e1;
-		background: #f8fafc;
-	}
-	.btn-outline:active {
-		transform: scale(0.97);
-	}
-
-	/* Botón outline claro sobre fondo oscuro (hero) */
-	.btn-ghost-light {
-		@apply inline-flex items-center justify-center gap-2 rounded-xl border px-6 py-3 font-semibold text-white;
-		border-color: rgba(255, 255, 255, 0.25);
-		background: rgba(255, 255, 255, 0.04);
-		transition:
-			transform var(--dur-click) var(--ease-spring),
-			background-color var(--dur-hover) var(--ease-spring),
-			border-color var(--dur-hover) var(--ease-spring);
-	}
-	.btn-ghost-light:hover {
-		background: rgba(255, 255, 255, 0.1);
-		border-color: rgba(255, 255, 255, 0.45);
-	}
-	.btn-ghost-light:active {
-		transform: scale(0.97);
-	}
-
-	/* Eyebrow de sección */
+	/* Eyebrow de sección: 12px uppercase, sin decoración. */
 	.eyebrow {
-		@apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+		@apply inline-block text-xs font-normal uppercase tracking-[0.18em] text-caption;
 	}
 
-	/* Chip de etiqueta */
-	.chip {
-		@apply inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-xs font-medium text-muted;
+	/* ---------------------------------------------------------------
+	   TILE — bloque rectangular de color sólido (Windows 8 Start)
+	   Hover: tono más oscuro + scale(1.02), 150ms linear, sin elevación.
+	   El tamaño (1×1, 2×1, …) lo da el grid del contenedor (col/row-span).
+	   --------------------------------------------------------------- */
+	.tile {
+		@apply relative flex flex-col justify-between p-6 text-left;
+		border-radius: 0;
+		transition:
+			background-color 150ms linear,
+			color 150ms linear,
+			transform 150ms linear;
+	}
+	a.tile,
+	button.tile {
+		@apply cursor-pointer;
+	}
+	a.tile:hover,
+	button.tile:hover {
+		transform: scale(1.02);
+	}
+
+	.tile-blue {
+		@apply bg-blue text-white;
+	}
+	a.tile-blue:hover,
+	button.tile-blue:hover {
+		@apply bg-blue-dark;
+	}
+	.tile-cyan {
+		@apply bg-cyan text-white;
+	}
+	a.tile-cyan:hover,
+	button.tile-cyan:hover {
+		@apply bg-cyan-dark;
+	}
+	.tile-green {
+		@apply bg-green text-white;
+	}
+	a.tile-green:hover,
+	button.tile-green:hover {
+		@apply bg-green-dark;
+	}
+	.tile-orange {
+		@apply bg-orange text-white;
+	}
+	a.tile-orange:hover,
+	button.tile-orange:hover {
+		@apply bg-orange-dark;
+	}
+	.tile-red {
+		@apply bg-red text-white;
+	}
+	a.tile-red:hover,
+	button.tile-red:hover {
+		@apply bg-red-dark;
+	}
+	.tile-dark {
+		@apply bg-fg text-white;
+	}
+	a.tile-dark:hover,
+	button.tile-dark:hover {
+		background: #000000;
+	}
+	.tile-light {
+		@apply border border-fg bg-bg text-fg;
+	}
+	a.tile-light:hover,
+	button.tile-light:hover {
+		@apply bg-fg text-white;
+	}
+
+	/* ---------------------------------------------------------------
+	   BOTONES
+	   --------------------------------------------------------------- */
+	.btn-primary {
+		@apply inline-flex items-center justify-center gap-2 border border-blue bg-blue px-8 py-4 text-base font-normal text-white;
+		border-radius: 0;
+		transition:
+			background-color 150ms linear,
+			color 150ms linear;
+	}
+	.btn-primary:hover {
+		@apply bg-bg text-blue;
+	}
+
+	.btn-secondary {
+		@apply inline-flex items-center justify-center gap-2 border border-fg bg-bg px-8 py-4 text-base font-normal text-fg;
+		border-radius: 0;
+		transition:
+			background-color 150ms linear,
+			color 150ms linear;
+	}
+	.btn-secondary:hover {
+		@apply bg-fg text-white;
+	}
+
+	/* Secundario sobre fondo oscuro */
+	.btn-secondary-dark {
+		@apply inline-flex items-center justify-center gap-2 border border-white bg-transparent px-8 py-4 text-base font-normal text-white;
+		border-radius: 0;
+		transition:
+			background-color 150ms linear,
+			color 150ms linear;
+	}
+	.btn-secondary-dark:hover {
+		@apply bg-white text-fg;
+	}
+
+	/* ---------------------------------------------------------------
+	   GLASS EMERALD — sistema de énfasis (uso escaso y deliberado)
+	   --------------------------------------------------------------- */
+	.glass-emerald {
+		position: relative;
+		background: var(--glass-bg);
+		backdrop-filter: blur(12px) saturate(180%);
+		-webkit-backdrop-filter: blur(12px) saturate(180%);
+		border: 1px solid var(--emerald-border);
+		border-radius: 0;
+	}
+	.glass-emerald::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		box-shadow:
+			inset 0 0 0 1px rgba(0, 200, 150, 0.2),
+			0 0 32px rgba(0, 200, 150, 0.12);
+		pointer-events: none;
+	}
+	.glass-emerald::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: rgba(0, 200, 150, 0.6);
+	}
+
+	.glass-emerald-dark {
+		position: relative;
+		background: var(--glass-bg-dark);
+		backdrop-filter: blur(16px) saturate(200%);
+		-webkit-backdrop-filter: blur(16px) saturate(200%);
+		border: 1px solid rgba(0, 200, 150, 0.25);
+		border-radius: 0;
+	}
+
+	/* CTA Glass Emerald — reservado a acción principal */
+	.btn-glass-emerald {
+		position: relative;
+		overflow: hidden;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		background: rgba(0, 200, 150, 0.15);
+		border: 1px solid rgba(0, 200, 150, 0.5);
+		color: #00c896;
+		padding: 16px 40px;
+		border-radius: 0;
+		font-size: 16px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		transition: all 150ms linear;
+	}
+	.btn-glass-emerald:hover {
+		background: rgba(0, 200, 150, 0.28);
+		border-color: rgba(0, 200, 150, 0.8);
+		color: #ffffff;
+		transform: scale(1.02);
+	}
+	/* Variante compacta para navbar */
+	.btn-glass-emerald.btn-glass-sm {
+		padding: 10px 24px;
+	}
+
+	/* Tile Glass Emerald — un único tile destacado por mosaico */
+	.tile-glass-emerald {
+		position: relative;
+		background: rgba(0, 200, 150, 0.1);
+		border: 1px solid rgba(0, 200, 150, 0.3);
+		backdrop-filter: blur(12px) saturate(160%);
+		-webkit-backdrop-filter: blur(12px) saturate(160%);
+		border-radius: 0;
+		transition: all 150ms linear;
+	}
+	.tile-glass-emerald:hover {
+		background: rgba(0, 200, 150, 0.22);
+		border-color: rgba(0, 200, 150, 0.6);
+	}
+
+	/* Separador de sección — ÚNICO gradiente permitido en el sistema */
+	.emerald-divider {
+		height: 2px;
+		border: 0;
+		margin: 0;
+		background: linear-gradient(
+			90deg,
+			transparent 0%,
+			rgba(0, 200, 150, 0.8) 30%,
+			rgba(0, 200, 150, 1) 50%,
+			rgba(0, 200, 150, 0.8) 70%,
+			transparent 100%
+		);
+	}
+
+	/* ---------------------------------------------------------------
+	   FORMULARIO — borde inferior únicamente, focus emerald sin glow
+	   --------------------------------------------------------------- */
+	.field {
+		@apply w-full border-0 bg-transparent px-0 py-3 text-fg;
+		border-bottom: 1px solid var(--color-fg);
+		border-radius: 0;
+		transition: border-color 150ms linear;
+	}
+	.field::placeholder {
+		color: #999999;
+	}
+	.field:focus {
+		outline: none;
+		border-bottom-color: var(--emerald-base);
+	}
+	.field-label {
+		@apply mb-2 block text-sm font-normal text-caption;
 	}
 }
 
 @layer utilities {
-	/* Scroll horizontal sin barra (pills) */
+	/* Scroll horizontal sin barra */
 	.no-scrollbar {
 		-ms-overflow-style: none;
 		scrollbar-width: none;
@@ -139,31 +311,24 @@
 		display: none;
 	}
 
-	/* Patrón de puntos sutil (para fondos oscuros del hero) */
-	.dot-pattern {
-		background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-		background-size: 22px 22px;
-	}
-
-	/* Fade-in al entrar al viewport */
+	/* Entrada estándar al viewport (lineal, sin rebote) */
 	.reveal {
 		opacity: 0;
-		transform: translateY(24px);
+		transform: translateX(-24px);
 		transition:
-			opacity 0.7s var(--ease-spring),
-			transform 0.7s var(--ease-spring);
+			opacity 200ms linear,
+			transform 200ms linear;
 	}
 	.reveal.is-visible {
 		opacity: 1;
-		transform: translateY(0);
+		transform: translateX(0);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		*,
 		*::before,
 		*::after {
-			animation-duration: 0.001ms !important;
-			animation-iteration-count: 1 !important;
+			animation: none !important;
 			transition-duration: 0.001ms !important;
 			scroll-behavior: auto !important;
 		}
@@ -172,42 +337,4 @@
 			transform: none;
 		}
 	}
-}
-
-/* =====================================================================
-   WHATSAPP — botón flotante con anillo pulsante
-   ===================================================================== */
-@keyframes wa-pulse {
-	0% {
-		box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
-	}
-	70% {
-		box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
-	}
-	100% {
-		box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-	}
-}
-.wa-pulse {
-	animation: wa-pulse 2.2s var(--ease-spring) infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-	.wa-pulse {
-		animation: none;
-	}
-}
-
-/* --- Lenis smooth scroll --- */
-html.lenis,
-html.lenis body {
-	height: auto;
-}
-.lenis.lenis-smooth {
-	scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-	overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-	overflow: hidden;
 }

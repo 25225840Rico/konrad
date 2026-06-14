@@ -1,20 +1,39 @@
 <script lang="ts">
 	import { WA_LINK } from '$lib/seo/site';
+
+	let isHovered = $state(false);
+	let pulseOpacity = $state(1);
+
+	// Parpadeo lineal suave de opacidad para indicar disponibilidad
+	$effect(() => {
+		if (!isHovered) {
+			const interval = setInterval(() => {
+				pulseOpacity = pulseOpacity === 1 ? 0.6 : 1;
+			}, 1500);
+			return () => clearInterval(interval);
+		}
+	});
 </script>
 
 <a
 	href={WA_LINK}
 	target="_blank"
 	rel="noopener"
-	class="group fixed bottom-6 right-6 z-50 flex h-[60px] w-[60px] items-center justify-center rounded-full text-white shadow-card-lg wa-pulse"
-	style="background:#25D366;"
+	class="group fixed bottom-6 right-6 z-50 flex h-[60px] w-[60px] items-center justify-center border-2 border-white text-white transition-all duration-150"
+	style="background:#25D366; opacity: {pulseOpacity};"
 	aria-label="Escríbenos por WhatsApp"
+	onmouseenter={() => {
+		isHovered = true;
+	}}
+	onmouseleave={() => {
+		isHovered = false;
+	}}
 >
-	<!-- Tooltip (desktop) -->
+	<!-- Tooltip (desktop, bloque recto sólido) -->
 	<span
-		class="pointer-events-none absolute right-[72px] hidden whitespace-nowrap rounded-lg bg-primary px-3 py-2 text-sm font-medium text-white opacity-0 shadow-card transition-opacity duration-120 group-hover:opacity-100 lg:block"
+		class="pointer-events-none absolute right-[70px] hidden whitespace-nowrap border border-fg bg-fg px-3 py-2 text-xs text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100 lg:block"
 	>
-		Escríbenos por WhatsApp
+		Escríbenos ahora
 	</span>
 
 	<!-- Logo oficial de WhatsApp (glyph relleno) -->

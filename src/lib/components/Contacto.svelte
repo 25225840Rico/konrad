@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import Icon from '$lib/Icon.svelte';
 	import { contact, projectTypes } from '$lib/data';
 	import { reveal } from '$lib/reveal';
 	import { WA_LINK } from '$lib/seo/site';
@@ -8,9 +7,8 @@
 	let name = $state('');
 	let company = $state('');
 	let email = $state('');
-	let phone = $state('');
-	let projectType = $state('');
 	let message = $state('');
+	let industry = $state('');
 
 	let status = $state<'idle' | 'loading' | 'success'>('idle');
 	let errors = $state<Record<string, string>>({});
@@ -33,166 +31,138 @@
 		status = 'loading';
 		setTimeout(() => (status = 'success'), 1200);
 	}
-
-	const field =
-		'w-full rounded-xl border border-line bg-surface px-4 py-3 text-ink placeholder:text-faint focus:border-accent2 focus:outline-none transition-colors duration-120';
 </script>
 
-<section id="contacto" class="bg-surface-200 py-20 lg:py-28">
+<section id="contacto" class="bg-white py-24 lg:py-32">
 	<div class="container-w">
-		<div class="reveal mx-auto mb-12 max-w-2xl text-center" use:reveal>
-			<span class="eyebrow">Contacto</span>
-			<h2 class="mt-3 text-3xl font-extrabold tracking-tight text-primary sm:text-4xl">
-				Hablemos de su operación
-			</h2>
-			<p class="mt-4 text-lg text-muted">
-				Cuéntenos qué necesita y le respondemos dentro de 24 horas con una propuesta sin compromiso.
-			</p>
-		</div>
+		<div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+			<!-- Columna Izquierda: Título + Divider + CTA WhatsApp prominente -->
+			<div class="flex flex-col justify-start" use:reveal>
+				<h2 class="text-6xl font-light leading-tight text-fg lg:text-7xl">HABLEMOS.</h2>
+				<div class="emerald-divider my-6"></div>
 
-		<div class="grid grid-cols-1 gap-8 lg:grid-cols-2" use:reveal>
-			<!-- Formulario -->
-			<div class="card p-8">
+				<!-- CTA WhatsApp Grande y Prominente -->
+				<div class="mt-8 flex flex-col gap-4 border border-fg bg-green p-8 text-white">
+					<h3 class="text-lg font-normal">O escríbanos directo por WhatsApp</h3>
+					<p class="text-sm">Diagnóstico gratuito de su operación en menos de 24 horas.</p>
+					<a
+						href={WA_LINK}
+						target="_blank"
+						rel="noopener"
+						class="btn-primary mt-4"
+					>
+						Escribir por WhatsApp →
+					</a>
+				</div>
+
+				<!-- Datos de contacto en texto plano -->
+				<div class="mt-12 space-y-4 text-sm text-fg">
+					<div>
+						<p class="font-normal">Email</p>
+						<a href={`mailto:${contact.email}`} class="text-emerald-base hover:underline">
+							{contact.email}
+						</a>
+					</div>
+					<div>
+						<p class="font-normal">Ubicación</p>
+						<p class="text-caption">{contact.city}</p>
+					</div>
+					<div>
+						<p class="font-normal">Horario</p>
+						<p class="text-caption">{contact.hours}</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- Columna Derecha: Formulario -->
+			<div use:reveal>
 				{#if status === 'success'}
 					<div
 						transition:fade={{ duration: 300 }}
-						class="rounded-xl border border-success/30 bg-success/10 p-4 font-medium text-success"
+						class="border border-emerald-base bg-white p-6 text-center"
 						role="alert"
 					>
-						¡Gracias! Le responderemos dentro de 24 horas.
+						<p class="font-normal text-fg">¡Gracias! Le responderemos dentro de 24 horas.</p>
 					</div>
 				{:else}
-					<form onsubmit={handleSubmit} novalidate class="flex flex-col gap-5">
+					<form onsubmit={handleSubmit} novalidate class="flex flex-col gap-6">
+						<!-- Nombre -->
 						<div>
-							<label for="c-name" class="mb-1 block text-sm font-medium text-ink">
-								Nombre <span class="text-accent">*</span>
+							<label for="c-name" class="field-label">
+								Nombre <span class="text-red">*</span>
 							</label>
-							<input id="c-name" type="text" bind:value={name} placeholder="Su nombre" class={field} />
-							{#if errors.name}<p class="mt-1 text-sm text-danger">{errors.name}</p>{/if}
+							<input
+								id="c-name"
+								type="text"
+								bind:value={name}
+								class="field"
+								autocomplete="name"
+							/>
+							{#if errors.name}<p class="mt-2 text-sm text-red">{errors.name}</p>{/if}
 						</div>
 
+						<!-- Empresa -->
 						<div>
-							<label for="c-company" class="mb-1 block text-sm font-medium text-ink">
-								Empresa <span class="text-xs text-faint">(opcional)</span>
-							</label>
+							<label for="c-company" class="field-label">Empresa</label>
 							<input
 								id="c-company"
 								type="text"
 								bind:value={company}
-								placeholder="Nombre de su empresa"
-								class={field}
+								class="field"
+								autocomplete="organization"
 							/>
 						</div>
 
+						<!-- Industria (select) -->
 						<div>
-							<label for="c-email" class="mb-1 block text-sm font-medium text-ink">
-								Correo electrónico <span class="text-accent">*</span>
-							</label>
-							<input
-								id="c-email"
-								type="email"
-								bind:value={email}
-								placeholder="usted@empresa.cl"
-								class={field}
-							/>
-							{#if errors.email}<p class="mt-1 text-sm text-danger">{errors.email}</p>{/if}
-						</div>
-
-						<div>
-							<label for="c-phone" class="mb-1 block text-sm font-medium text-ink">
-								Teléfono <span class="text-xs text-faint">(opcional)</span>
-							</label>
-							<input
-								id="c-phone"
-								type="tel"
-								bind:value={phone}
-								placeholder="+56 9 XXXX XXXX"
-								class={field}
-							/>
-						</div>
-
-						<div>
-							<label for="c-type" class="mb-1 block text-sm font-medium text-ink">¿Qué necesita?</label>
-							<select id="c-type" bind:value={projectType} class="{field} appearance-none">
-								<option value="" disabled selected>Seleccione una opción…</option>
+							<label for="c-industry" class="field-label">¿Qué necesita?</label>
+							<select id="c-industry" bind:value={industry} class="field appearance-none">
+								<option value="">Seleccione una opción…</option>
 								{#each projectTypes as pt}
 									<option value={pt}>{pt}</option>
 								{/each}
 							</select>
 						</div>
 
+						<!-- Email -->
 						<div>
-							<label for="c-message" class="mb-1 block text-sm font-medium text-ink">
-								Mensaje <span class="text-accent">*</span>
+							<label for="c-email" class="field-label">
+								Correo <span class="text-red">*</span>
+							</label>
+							<input
+								id="c-email"
+								type="email"
+								bind:value={email}
+								class="field"
+								autocomplete="email"
+							/>
+							{#if errors.email}<p class="mt-2 text-sm text-red">{errors.email}</p>{/if}
+						</div>
+
+						<!-- Mensaje -->
+						<div>
+							<label for="c-message" class="field-label">
+								Mensaje <span class="text-red">*</span>
 							</label>
 							<textarea
 								id="c-message"
-								rows={4}
+								rows={5}
 								bind:value={message}
-								placeholder="Cuéntenos sobre su proyecto u operación…"
-								class="{field} resize-y"
+								class="field resize-none"
 							></textarea>
-							{#if errors.message}<p class="mt-1 text-sm text-danger">{errors.message}</p>{/if}
+							{#if errors.message}<p class="mt-2 text-sm text-red">{errors.message}</p>{/if}
 						</div>
 
+						<!-- Botón ENVIAR (Glass Emerald) -->
 						<button
 							type="submit"
 							disabled={status === 'loading'}
-							class="btn-accent w-full py-4 text-base disabled:cursor-not-allowed disabled:opacity-60"
+							class="btn-glass-emerald w-full py-4 disabled:cursor-not-allowed disabled:opacity-60"
 						>
-							{status === 'loading' ? 'Enviando…' : 'Enviar mensaje'}
+							{status === 'loading' ? 'ENVIANDO…' : 'ENVIAR'}
 						</button>
 					</form>
 				{/if}
-			</div>
-
-			<!-- Datos + CTA WhatsApp -->
-			<div class="flex flex-col gap-6">
-				<div class="card flex flex-col gap-5 p-8">
-					<h3 class="text-xl font-bold text-primary">Información de contacto</h3>
-
-					<a
-						href={contact.whatsapp}
-						target="_blank"
-						rel="noopener"
-						class="flex items-center gap-3 text-sm text-ink transition-colors duration-120 hover:text-accent2"
-					>
-						<span class="text-accent2"><Icon name="zap" class="h-5 w-5" /></span>
-						WhatsApp · {contact.whatsappLabel}
-					</a>
-					<a
-						href={`mailto:${contact.email}`}
-						class="flex items-center gap-3 text-sm text-ink transition-colors duration-120 hover:text-accent2"
-					>
-						<span class="text-accent2"><Icon name="mail" class="h-5 w-5" /></span>
-						{contact.email}
-					</a>
-					<div class="flex items-center gap-3 text-sm text-ink">
-						<span class="text-accent2"><Icon name="map" class="h-5 w-5" /></span>
-						{contact.city}
-					</div>
-					<div class="flex items-center gap-3 text-sm text-ink">
-						<span class="text-accent2"><Icon name="clock" class="h-5 w-5" /></span>
-						{contact.hours}
-					</div>
-				</div>
-
-				<!-- CTA directo a WhatsApp -->
-				<div class="card flex flex-col gap-4 bg-primary p-8 text-white">
-					<h3 class="text-xl font-bold">¿Prefiere hablar ahora?</h3>
-					<p class="text-sm text-white/70">
-						Escríbanos por WhatsApp y coordinamos un diagnóstico gratuito de su operación.
-					</p>
-					<a
-						href={WA_LINK}
-						target="_blank"
-						rel="noopener"
-						class="btn-accent w-full"
-						style="background:#25D366;color:#fff;"
-					>
-						Escribir por WhatsApp
-					</a>
-				</div>
 			</div>
 		</div>
 	</div>

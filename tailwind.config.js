@@ -2,49 +2,83 @@
 export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
+		// --- Sistema Metro UI 2026 × Glass Emerald ---
+		// Sin sombras, sin gradientes (salvo emerald-divider), sin border-radius.
 		extend: {
 			colors: {
-				// --- Paleta CoreWerk (B2B industrial) ---
-				primary: '#0A1628', // azul noche industrial (fondos de marca, hero, footer)
-				'primary-700': '#0F1F38', // navy un punto más claro (cards sobre primary)
-				accent: '#F59E0B', // ámbar (CTAs, foco)
-				'accent-soft': '#FBBF24',
-				accent2: '#0EA5E9', // celeste eléctrico (highlights tecnológicos)
-				surface: '#F8FAFC', // fondo base claro
-				'surface-200': '#EEF2F7', // superficie alterna
-				ink: '#1E293B', // texto principal sobre claro
-				muted: '#64748B', // texto secundario
-				faint: '#94A3B8', // texto terciario
-				line: '#E2E8F0', // bordes
-				danger: '#EF4444', // urgencia / alertas
-				success: '#10B981' // confirmaciones
+				bg: '#FFFFFF',
+				fg: '#111111',
+				blue: '#0078D7',
+				'blue-dark': '#005A9E',
+				cyan: '#00BCF2',
+				'cyan-dark': '#0097C2',
+				green: '#00A300',
+				'green-dark': '#007A00',
+				orange: '#F7630C',
+				'orange-dark': '#C44D09',
+				red: '#E81123',
+				'red-dark': '#B50E1C',
+				caption: '#555555',
+				// Glass Emerald — sistema de énfasis
+				emerald: '#00C896',
+				'emerald-deep': '#007A5C'
 			},
 			fontFamily: {
-				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+				sans: [
+					'Inter',
+					'Segoe UI',
+					'ui-sans-serif',
+					'system-ui',
+					'-apple-system',
+					'sans-serif'
+				]
 			},
-			spacing: {
-				18: '4.5rem',
-				22: '5.5rem',
-				30: '7.5rem'
+			fontWeight: {
+				light: '300'
 			},
+			// Geometría Metro: ángulos rectos en todo.
 			borderRadius: {
-				xl: '0.875rem',
-				'2xl': '1.25rem',
-				'3xl': '1.75rem'
-			},
-			transitionTimingFunction: {
-				spring: 'cubic-bezier(0.22, 1, 0.36, 1)',
-				'spring-soft': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-				exit: 'cubic-bezier(0.4, 0, 1, 1)'
-			},
-			transitionDuration: {
-				90: '90ms',
-				120: '120ms'
+				none: '0',
+				DEFAULT: '0',
+				sm: '0',
+				md: '0',
+				lg: '0',
+				xl: '0',
+				'2xl': '0',
+				'3xl': '0',
+				full: '0'
 			},
 			boxShadow: {
-				card: '0 1px 2px rgba(15,23,42,0.04), 0 4px 16px rgba(15,23,42,0.06)',
-				'card-lg': '0 8px 24px rgba(15,23,42,0.08), 0 20px 48px rgba(15,23,42,0.10)',
-				glow: '0 0 0 1px rgba(245,158,11,0.35), 0 8px 30px rgba(245,158,11,0.25)'
+				none: 'none'
+			},
+			// Animaciones lineales / intencionales (Windows 8).
+			transitionTimingFunction: {
+				metro: 'cubic-bezier(0.0, 0.0, 0.2, 1)'
+			},
+			transitionDuration: {
+				150: '150ms'
+			},
+			keyframes: {
+				'slide-in-metro': {
+					from: { transform: 'translateX(-24px)', opacity: '0' },
+					to: { transform: 'translateX(0)', opacity: '1' }
+				},
+				'emerald-appear': {
+					from: {
+						transform: 'translateX(-16px)',
+						opacity: '0',
+						boxShadow: '0 0 0px rgba(0,200,150,0)'
+					},
+					to: {
+						transform: 'translateX(0)',
+						opacity: '1',
+						boxShadow: '0 0 24px rgba(0,200,150,0.15)'
+					}
+				}
+			},
+			animation: {
+				'slide-in-metro': 'slide-in-metro 200ms linear both',
+				'emerald-appear': 'emerald-appear 220ms cubic-bezier(0.0,0.0,0.2,1) both'
 			}
 		}
 	},

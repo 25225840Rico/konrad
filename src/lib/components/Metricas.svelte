@@ -38,15 +38,15 @@
 	});
 </script>
 
-<section id="metricas" class="bg-primary py-20 text-white lg:py-24">
+<section id="metricas" class="bg-fg py-20 text-white lg:py-24">
 	<div class="container-w">
 		<div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
 			{#each metrics as m, i}
-				<div class="text-center">
-					<div class="text-4xl font-extrabold text-accent sm:text-5xl">
+				<div class="text-left">
+					<div class="text-6xl font-light text-white">
 						{m.prefix}{shown[i]}{m.suffix}
 					</div>
-					<div class="mt-2 text-sm text-white/65">{m.label}</div>
+					<div class="mt-3 text-sm text-white/70 uppercase tracking-[0.18em]">{m.label}</div>
 				</div>
 			{/each}
 		</div>

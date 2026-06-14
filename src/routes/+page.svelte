@@ -1,8 +1,10 @@
 <script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Hero from '$lib/components/Hero.svelte';
+	import CashflowRapido from '$lib/components/CashflowRapido.svelte';
 	import Industrias from '$lib/components/Industrias.svelte';
 	import Servicios from '$lib/components/Servicios.svelte';
+	import AgenteDemo from '$lib/components/AgenteDemo.svelte';
 	import ComoTrabajamos from '$lib/components/ComoTrabajamos.svelte';
 	import Pricing from '$lib/components/Pricing.svelte';
 	import Casos from '$lib/components/Casos.svelte';
@@ -78,12 +80,14 @@
 
 <main>
 	<Hero />
+	<CashflowRapido />
+	<Metricas />
 	<Industrias />
 	<Servicios />
+	<AgenteDemo />
 	<ComoTrabajamos />
-	<Pricing />
 	<Casos />
-	<Metricas />
+	<Pricing />
 	<FAQ />
 	<Contacto />
 </main>

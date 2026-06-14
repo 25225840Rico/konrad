@@ -4,8 +4,12 @@
 // Edita aquí textos, precios y datos. Los componentes leen de este archivo.
 // =====================================================================
 
-import { WA_LINK } from '$lib/seo/site';
+import { WA_LINK, SITE } from '$lib/seo/site';
 export { WA_LINK };
+
+// Helper: enlace de WhatsApp con mensaje pre-cargado personalizado.
+export const waLink = (msg: string) =>
+	`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(msg)}`;
 
 // ---------------------------------------------------------------------
 // INDUSTRIAS
@@ -471,3 +475,103 @@ export const projectTypes = [
 	...units.map((u) => u.name),
 	'Aún no lo tengo claro'
 ];
+
+// ---------------------------------------------------------------------
+// CASHFLOW RÁPIDO (3 servicios de entrada, alta conversión, 7-15 días)
+// ---------------------------------------------------------------------
+export type CashflowCard = {
+	id: string;
+	name: string;
+	price: string;
+	time: string;
+	badge: string;
+	desc: string;
+	includes: string[];
+	cta: string;
+	waMsg: string;
+	featured: boolean;
+};
+
+export const cashflowCards: CashflowCard[] = [
+	{
+		id: 'landing',
+		name: 'Landing Page Profesional',
+		price: 'desde USD 400',
+		time: '7 días',
+		badge: '🔥 Más solicitado',
+		desc: 'Su empresa en Google con una página que convierte visitantes en clientes. Diseño industrial, formulario de contacto y WhatsApp integrado.',
+		includes: [
+			'Diseño profesional',
+			'Responsive mobile',
+			'Formulario + WhatsApp',
+			'SSL incluido',
+			'Dominio por 1 año'
+		],
+		cta: 'Quiero mi landing →',
+		waMsg: 'Hola CoreWerk, quiero una Landing Page Profesional (desde USD 400).',
+		featured: true
+	},
+	{
+		id: 'chatbot',
+		name: 'Chatbot WhatsApp 24/7',
+		price: 'desde USD 600',
+		time: '10 días',
+		badge: '⚡ ROI en 30 días',
+		desc: 'Su empresa responde cotizaciones, agenda visitas y filtra clientes a las 3am. Sin persona. Sin costo adicional por mensaje.',
+		includes: [
+			'Flujo conversacional',
+			'Integración WhatsApp Business',
+			'Panel de conversaciones',
+			'Mensajes ilimitados',
+			'30 días de soporte'
+		],
+		cta: 'Ver demo →',
+		waMsg: 'Hola CoreWerk, quiero ver una demo del Chatbot WhatsApp 24/7 (desde USD 600).',
+		featured: false
+	},
+	{
+		id: 'automatizacion',
+		name: 'Automatización Express',
+		price: 'desde USD 800',
+		time: '15 días',
+		badge: '⏱️ Ahorra 10h/semana',
+		desc: 'Eliminamos el proceso manual más doloroso de su operación. Cotizaciones, reportes, recordatorios — en automático.',
+		includes: [
+			'Diagnóstico de proceso',
+			'Flujo automatizado',
+			'Integración email + WhatsApp',
+			'Manual de uso',
+			'60 días de soporte'
+		],
+		cta: 'Automatizar ahora →',
+		waMsg: 'Hola CoreWerk, quiero automatizar un proceso de mi operación (Automatización Express, desde USD 800).',
+		featured: false
+	}
+];
+
+export const cashflowBannerMsg =
+	'Hola CoreWerk, tengo una necesidad específica y quiero contarles mi caso.';
+
+// ---------------------------------------------------------------------
+// AGENTE IA (demo en vivo con Claude API)
+// ---------------------------------------------------------------------
+export const agentChips = [
+	'¿Cuánto cuesta una landing page?',
+	'Necesito automatizar mis cotizaciones',
+	'¿Trabajan con empresas mineras?',
+	'¿Qué es un agente IA?'
+];
+
+export const agentSystemPrompt = `Eres el asistente virtual de CoreWerk, empresa tecnológica de Antofagasta, Chile, especializada en soluciones digitales para minería, transporte, logística y servicios industriales.
+
+Servicios que ofrecemos:
+- Landing pages desde USD 400, entrega 7 días
+- Chatbot WhatsApp desde USD 600, entrega 10 días
+- Automatización empresarial desde USD 800, entrega 15 días
+- Agentes IA desde USD 1.500, entrega 20 días
+- Sistemas y plataformas desde USD 2.000, entrega 25 días
+- Marketing B2B desde USD 400/mes
+
+Tu objetivo es entender el problema del visitante, recomendar el servicio más adecuado con precio y plazo, y al final invitarlo a contactar por WhatsApp: +56 9 XXXX XXXX
+
+Responde siempre en español. Sé directo y profesional. Máximo 3 párrafos por respuesta. Si no sabes algo, di que lo consultarás con el equipo.`;
