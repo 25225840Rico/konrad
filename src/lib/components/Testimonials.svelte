@@ -3,11 +3,11 @@
 	import { reveal } from '$lib/reveal';
 </script>
 
-<section id="testimonios" class="py-20 lg:py-28 bg-surface">
+<section id="testimonios" class="py-20 lg:py-28">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Header -->
 		<div class="text-center mb-14" use:reveal>
-			<p class="text-accent uppercase text-sm font-semibold tracking-widest mb-3">Testimonios</p>
+			<p class="eyebrow">Testimonios</p>
 			<h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">
 				Lo que dicen nuestros clientes
 			</h2>
@@ -17,7 +17,7 @@
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 			{#each testimonials as t}
 				<article
-					class="bg-white rounded-2xl p-8 border border-slate-200 flex flex-col shadow-sm"
+					class="glass rounded-2xl p-8 flex flex-col"
 					use:reveal
 				>
 					<!-- Decorative quote mark -->
@@ -31,9 +31,9 @@
 					</blockquote>
 
 					<!-- Author -->
-					<footer class="mt-auto pt-6 border-t border-slate-100">
+					<footer class="mt-auto pt-6 border-t border-white/10">
 						<p class="font-semibold text-ink">{t.name}</p>
-						<p class="text-sm text-muted">{t.role} · {t.company}</p>
+						<p class="text-faint text-sm">{t.role} · {t.company}</p>
 					</footer>
 				</article>
 			{/each}

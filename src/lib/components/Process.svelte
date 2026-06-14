@@ -3,15 +3,13 @@
 	import { processSteps } from '$lib/data';
 </script>
 
-<section id="proceso" class="py-20 lg:py-28 bg-surface">
+<section id="proceso" class="py-20 lg:py-28">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 		<!-- Encabezado -->
 		<div class="text-center mb-16" use:reveal>
-			<p class="text-accent uppercase tracking-wide text-sm font-semibold mb-3">
-				Sin sorpresas
-			</p>
-			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink mb-4">
+			<p class="eyebrow mb-3">Sin sorpresas</p>
+			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient mb-4">
 				Cómo trabajamos
 			</h2>
 			<p class="text-muted text-lg max-w-xl mx-auto">
@@ -24,7 +22,7 @@
 
 			<!-- Línea conectora horizontal (solo lg) -->
 			<div
-				class="hidden lg:block absolute top-8 left-0 right-0 h-px bg-slate-200"
+				class="hidden lg:block absolute top-7 h-px border-t border-white/10"
 				aria-hidden="true"
 				style="left: calc(10%); right: calc(10%);"
 			></div>
@@ -38,20 +36,19 @@
 
 						<!-- Número -->
 						<div
-							class="shrink-0 flex items-center justify-center w-16 h-16 rounded-full
-							       bg-accent/10 text-accent font-extrabold text-2xl
-							       lg:mb-5 relative z-10 ring-4 ring-surface"
+							class="shrink-0 glass rounded-full w-14 h-14 flex items-center justify-center
+							       lg:mb-5 relative z-10"
 							aria-hidden="true"
 						>
-							{step.n}
+							<span class="text-accent font-extrabold text-2xl">{step.n}</span>
 						</div>
 
 						<!-- Línea vertical mobile (salvo el último) -->
 						{#if i < processSteps.length - 1}
 							<div
-								class="lg:hidden absolute left-8 top-16 bottom-0 w-px bg-slate-200 -translate-x-1/2"
+								class="lg:hidden absolute left-7 w-px border-l border-white/10 -translate-x-1/2"
 								aria-hidden="true"
-								style="top: 4rem; height: calc(100% + 2.5rem);"
+								style="top: 3.5rem; height: calc(100% + 2.5rem);"
 							></div>
 						{/if}
 

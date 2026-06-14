@@ -2,27 +2,189 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =====================================================================
+   KONRAD — Design System (tema oscuro premium + vidrio físico)
+   Roles: Director / UX / UI / Glass / Motion / Frontend / A11y
+   ===================================================================== */
+
 @layer base {
+	:root {
+		/* Motion tokens (Motion Specialist) */
+		--ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+		--ease-spring-soft: cubic-bezier(0.34, 1.56, 0.64, 1);
+		--ease-exit: cubic-bezier(0.4, 0, 1, 1);
+		--dur-click: 90ms;
+		--dur-hover: 120ms;
+		--dur-modal: 250ms;
+		--dur-panel: 300ms;
+	}
+
 	html {
 		scroll-behavior: smooth;
 	}
 
 	body {
 		@apply bg-surface text-ink;
+		position: relative;
+		min-height: 100vh;
+		overflow-x: hidden;
 	}
 
-	/* Foco visible accesible en todos los elementos interactivos */
+	/* --- Escena de fondo: profundidad para que el vidrio tenga qué refractar ---
+	   Capa fija con orbes de luz (ámbar + índigo) sobre el abismo navy + grano sutil. */
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: -2;
+		background:
+			radial-gradient(60rem 60rem at 85% -10%, rgba(245, 158, 11, 0.16), transparent 60%),
+			radial-gradient(50rem 50rem at 10% 10%, rgba(56, 89, 235, 0.18), transparent 55%),
+			radial-gradient(70rem 70rem at 50% 120%, rgba(99, 102, 241, 0.12), transparent 60%),
+			#070b16;
+	}
+
+	/* Grano/ruido muy sutil para textura física (no banding en los gradientes) */
+	body::after {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		pointer-events: none;
+		opacity: 0.035;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	/* Foco visible accesible (A11y / WCAG 2.2) */
 	a:focus-visible,
 	button:focus-visible,
 	input:focus-visible,
 	select:focus-visible,
-	textarea:focus-visible {
-		@apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-white;
+	textarea:focus-visible,
+	[tabindex]:focus-visible {
+		outline: none;
+		box-shadow:
+			0 0 0 2px #070b16,
+			0 0 0 4px #f59e0b;
+		border-radius: 0.5rem;
+	}
+
+	::selection {
+		background: rgba(245, 158, 11, 0.3);
+		color: #fff;
+	}
+}
+
+@layer components {
+	/* =================================================================
+	   VIDRIO FÍSICO (Glass Specialist)
+	   - backdrop-filter: blur + saturate (refracción/contexto del fondo)
+	   - fill translúcido (absorción lumínica)
+	   - rim Fresnel: borde con gradiente más brillante arriba (::after + mask)
+	   - sombras: elevación externa + highlight interno superior + sombra inferior
+	   ================================================================= */
+	.glass {
+		position: relative;
+		background: rgba(255, 255, 255, 0.06);
+		-webkit-backdrop-filter: blur(24px) saturate(140%);
+		backdrop-filter: blur(24px) saturate(140%);
+		border: 1px solid transparent;
+		background-clip: padding-box;
+		box-shadow:
+			0 8px 32px rgba(0, 0, 0, 0.35),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2),
+			inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+	}
+
+	/* Rim Fresnel: anillo de 1px con gradiente vertical (brillante arriba, tenue abajo) */
+	.glass::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		padding: 1px;
+		background: linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.5),
+			rgba(255, 255, 255, 0.06) 38%,
+			rgba(255, 255, 255, 0.14)
+		);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		pointer-events: none;
+	}
+
+	/* Vidrio más denso para navbar/menús/modales (mayor legibilidad sobre contenido) */
+	.glass-strong {
+		background: rgba(11, 17, 32, 0.55);
+		-webkit-backdrop-filter: blur(24px) saturate(160%);
+		backdrop-filter: blur(24px) saturate(160%);
+	}
+
+	/* Tarjeta de vidrio interactiva: reacciona al hover con elevación y rim más vivo */
+	.glass-card {
+		transition:
+			transform var(--dur-hover) var(--ease-spring),
+			box-shadow var(--dur-hover) var(--ease-spring),
+			background-color var(--dur-hover) var(--ease-spring);
+		will-change: transform;
+	}
+	.glass-card:hover {
+		transform: translateY(-4px);
+		background: rgba(255, 255, 255, 0.09);
+		box-shadow:
+			0 20px 60px rgba(0, 0, 0, 0.45),
+			inset 0 1px 0 rgba(255, 255, 255, 0.28),
+			inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+	}
+
+	/* Botón primario (CTA ámbar) con micro-interacción de click */
+	.btn-accent {
+		@apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3 font-semibold text-primary;
+		transition:
+			transform var(--dur-click) var(--ease-spring),
+			box-shadow var(--dur-hover) var(--ease-spring),
+			filter var(--dur-hover) var(--ease-spring);
+	}
+	.btn-accent:hover {
+		filter: brightness(1.05);
+		box-shadow: 0 8px 30px rgba(245, 158, 11, 0.3);
+	}
+	.btn-accent:active {
+		transform: scale(0.97);
+	}
+
+	/* Botón de vidrio (secundario) */
+	.btn-glass {
+		@apply inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-semibold text-ink;
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
+		transition:
+			transform var(--dur-click) var(--ease-spring),
+			background-color var(--dur-hover) var(--ease-spring),
+			border-color var(--dur-hover) var(--ease-spring);
+	}
+	.btn-glass:hover {
+		background: rgba(255, 255, 255, 0.12);
+		border-color: rgba(255, 255, 255, 0.28);
+	}
+	.btn-glass:active {
+		transform: scale(0.97);
+	}
+
+	/* Eyebrow de sección (etiqueta superior) */
+	.eyebrow {
+		@apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
 	}
 }
 
 @layer utilities {
-	/* Scroll horizontal sin barra visible (pills del hero) */
+	/* Scroll horizontal sin barra (pills del hero) */
 	.no-scrollbar {
 		-ms-overflow-style: none;
 		scrollbar-width: none;
@@ -31,33 +193,49 @@
 		display: none;
 	}
 
-	/* Patrón de puntos sutil para fondos oscuros */
+	/* Patrón de puntos sutil para fondos */
 	.dot-pattern {
-		background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+		background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
 		background-size: 22px 22px;
 	}
 
-	/* Animación base para fade-in con IntersectionObserver.
-	   Los componentes añaden la clase .is-visible cuando entran al viewport. */
+	/* Texto con degradado (titulares premium) */
+	.text-gradient {
+		background: linear-gradient(180deg, #ffffff, #cbd5e1);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	/* Fade-in al entrar al viewport (IntersectionObserver -> .is-visible) */
 	.reveal {
 		opacity: 0;
-		transform: translateY(20px);
-		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+		transform: translateY(24px);
+		transition:
+			opacity 0.7s var(--ease-spring),
+			transform 0.7s var(--ease-spring);
 	}
 	.reveal.is-visible {
 		opacity: 1;
 		transform: translateY(0);
 	}
 
-	/* Respeta usuarios que prefieren menos movimiento */
+	/* Respeta usuarios con prefers-reduced-motion (Motion + A11y) */
 	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.001ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.001ms !important;
+			scroll-behavior: auto !important;
+		}
 		.reveal {
 			opacity: 1;
 			transform: none;
-			transition: none;
 		}
-		html {
-			scroll-behavior: auto;
+		.glass-card:hover {
+			transform: none;
 		}
 	}
 }

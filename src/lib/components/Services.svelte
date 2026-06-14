@@ -19,15 +19,13 @@
 	];
 </script>
 
-<section id="servicios" class="py-20 lg:py-28 bg-white">
+<section id="servicios" class="py-20 lg:py-28">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 		<!-- Encabezado -->
 		<div class="text-center mb-14" use:reveal>
-			<p class="text-accent uppercase tracking-wide text-sm font-semibold mb-3">
-				Nuestros servicios
-			</p>
-			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-ink mb-4">
+			<p class="eyebrow mb-3">Nuestros servicios</p>
+			<h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gradient mb-4">
 				Dos formas de trabajar contigo
 			</h2>
 			<p class="text-muted text-lg max-w-2xl mx-auto">
@@ -40,9 +38,9 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8" use:reveal>
 
 			<!-- IZQUIERDA: Web nueva -->
-			<div class="rounded-2xl border-2 border-primary/20 bg-primary/[0.03] p-8 flex flex-col">
+			<div class="glass rounded-3xl p-8 flex flex-col shadow-glow">
 				<!-- Badge -->
-				<span class="self-start bg-primary text-white text-xs font-semibold rounded-full px-3 py-1 mb-6">
+				<span class="self-start bg-accent/15 text-accent text-xs font-semibold rounded-full px-3 py-1 mb-6">
 					Web nueva
 				</span>
 
@@ -57,7 +55,7 @@
 					{#each newWebItems as item}
 						<li class="flex items-start gap-3">
 							<Icon name="check" class="w-5 h-5 text-accent mt-0.5 shrink-0" />
-							<span class="text-ink text-sm">{item}</span>
+							<span class="text-ink/90 text-sm">{item}</span>
 						</li>
 					{/each}
 				</ul>
@@ -68,20 +66,15 @@
 				</p>
 
 				<!-- CTA -->
-				<a
-					href="#precios"
-					class="self-start bg-primary text-white rounded-lg px-5 py-3 font-medium
-					       transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2
-					       focus-visible:outline-offset-2 focus-visible:outline-primary"
-				>
+				<a href="#precios" class="btn-accent self-start">
 					Ver paquetes
 				</a>
 			</div>
 
 			<!-- DERECHA: Mejora de sitio -->
-			<div class="rounded-2xl border-2 border-emerald-200 bg-emerald-50/50 p-8 flex flex-col">
+			<div class="glass rounded-3xl p-8 flex flex-col">
 				<!-- Badge -->
-				<span class="self-start bg-emerald-600 text-white text-xs font-semibold rounded-full px-3 py-1 mb-6">
+				<span class="self-start bg-emerald-400/15 text-emerald-300 text-xs font-semibold rounded-full px-3 py-1 mb-6">
 					Mejora de sitio
 				</span>
 
@@ -95,8 +88,8 @@
 				<ul class="space-y-3 mb-8 flex-1" role="list">
 					{#each improveItems as item}
 						<li class="flex items-start gap-3">
-							<Icon name="check" class="w-5 h-5 text-emerald-600 mt-0.5 shrink-0" />
-							<span class="text-ink text-sm">{item}</span>
+							<Icon name="check" class="w-5 h-5 text-emerald-300 mt-0.5 shrink-0" />
+							<span class="text-ink/90 text-sm">{item}</span>
 						</li>
 					{/each}
 				</ul>
@@ -107,12 +100,7 @@
 				</p>
 
 				<!-- CTA -->
-				<a
-					href="#diagnostico"
-					class="self-start bg-accent text-primary font-semibold rounded-lg px-5 py-3
-					       transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2
-					       focus-visible:outline-offset-2 focus-visible:outline-accent"
-				>
+				<a href="#diagnostico" class="btn-glass self-start">
 					Obtén diagnóstico gratis
 				</a>
 			</div>

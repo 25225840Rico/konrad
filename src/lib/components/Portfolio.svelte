@@ -3,13 +3,13 @@
 	import { reveal } from '$lib/reveal';
 </script>
 
-<section id="casos" class="py-20 lg:py-28 bg-white">
+<section id="casos" class="py-20 lg:py-28">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Header -->
 		<div class="text-center mb-14" use:reveal>
-			<p class="text-accent uppercase text-sm font-semibold tracking-widest mb-3">Casos reales</p>
+			<p class="eyebrow">Casos reales</p>
 			<h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">
-				Proyectos que entregan resultados
+				Proyectos que entregan <span class="text-gradient">resultados</span>
 			</h2>
 			<p class="text-muted text-lg max-w-2xl mx-auto">
 				Clientes reales, resultados medibles. Así trabajamos en Konrad.
@@ -20,7 +20,7 @@
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			{#each portfolio as p}
 				<article
-					class="group rounded-2xl overflow-hidden border border-slate-200 bg-white flex flex-col"
+					class="glass glass-card group rounded-2xl overflow-hidden flex flex-col"
 					use:reveal
 				>
 					<!-- Image with overlay -->
@@ -31,15 +31,15 @@
 							class="w-full h-48 object-cover"
 							loading="lazy"
 						/>
-						<!-- Dark overlay -->
+						<!-- Dark gradient overlay -->
 						<div
-							class="absolute inset-0 bg-primary/30 group-hover:bg-primary/60 transition-all duration-300"
+							class="absolute inset-0 bg-gradient-to-t from-abyss/90 via-abyss/30 to-transparent"
 						></div>
 						<!-- Result on hover overlay -->
 						<div
-							class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-4"
+							class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-120 ease-spring px-4"
 						>
-							<p class="text-white font-semibold text-center text-sm leading-snug drop-shadow">
+							<p class="text-ink font-semibold text-center text-sm leading-snug drop-shadow">
 								{p.result}
 							</p>
 						</div>
@@ -50,18 +50,18 @@
 						<div class="flex items-center gap-2 flex-wrap">
 							<!-- Segment badge -->
 							<span
-								class="bg-primary/5 text-primary text-xs rounded-full px-3 py-1 font-medium"
+								class="bg-white/8 text-ink/80 border border-white/10 rounded-full px-3 py-1 text-xs"
 							>
 								{p.segment}
 							</span>
 							<!-- Tag badge -->
 							{#if p.tag === 'Web nueva'}
-								<span class="bg-accent/10 text-accent text-xs rounded-full px-3 py-1 font-medium">
+								<span class="bg-accent/15 text-accent text-xs rounded-full px-3 py-1 font-medium">
 									{p.tag}
 								</span>
 							{:else}
 								<span
-									class="bg-emerald-100 text-emerald-700 text-xs rounded-full px-3 py-1 font-medium"
+									class="bg-emerald-400/15 text-emerald-300 text-xs rounded-full px-3 py-1 font-medium"
 								>
 									{p.tag}
 								</span>

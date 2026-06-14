@@ -5,44 +5,36 @@
 
 <section
 	id="inicio"
-	class="relative flex min-h-screen items-center bg-primary pt-28 pb-16 overflow-hidden"
+	class="relative flex min-h-screen items-center overflow-hidden pb-16 pt-28"
 >
-	<!-- Dot pattern background -->
-	<div class="dot-pattern pointer-events-none absolute inset-0 opacity-30" aria-hidden="true"></div>
+	<!-- Dot pattern sutil sobre la escena -->
+	<div class="dot-pattern pointer-events-none absolute inset-0 opacity-20" aria-hidden="true"></div>
 
 	<div class="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
 		<!-- Main content -->
 		<div class="max-w-3xl" use:reveal>
-			<h1
-				class="font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight text-white mb-6"
-			>
-				Creamos el sitio web que<br />
-				<span class="text-accent">tu negocio necesita</span>
+			<h1 class="mb-6 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
+				<span class="text-gradient">Creamos el sitio web</span><br />
+				<span class="text-gradient">que </span><span class="text-accent">tu negocio necesita</span>
 			</h1>
 
-			<p class="text-white/80 text-lg sm:text-xl max-w-2xl mb-8 leading-relaxed">
+			<p class="mb-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
 				Desde tiendas online hasta plataformas institucionales. Diseñamos, desarrollamos y mejoramos
 				sitios web para cualquier tipo de proyecto — rápidos, modernos y hechos para convertir.
 			</p>
 
 			<!-- CTAs -->
-			<div class="flex flex-wrap gap-4 mb-6">
-				<a
-					href="#contacto"
-					class="rounded-lg bg-accent px-6 py-3 font-semibold text-primary transition-opacity hover:opacity-90"
-				>
+			<div class="mb-6 flex flex-wrap gap-4">
+				<a href="#contacto" class="btn-accent">
 					Quiero una web nueva
 				</a>
-				<a
-					href="#diagnostico"
-					class="rounded-lg border border-white/40 px-6 py-3 text-white transition-colors hover:bg-white/10"
-				>
+				<a href="#diagnostico" class="btn-glass">
 					Mejorar mi web actual
 				</a>
 			</div>
 
 			<!-- Indicators -->
-			<p class="text-white/60 text-sm">
+			<p class="text-sm text-faint">
 				9 tipos de proyectos · +30 sitios entregados · Respuesta en 24 h
 			</p>
 		</div>
@@ -52,7 +44,8 @@
 			<div class="flex gap-3 overflow-x-auto no-scrollbar pb-2 sm:flex-wrap">
 				{#each heroPills as pill}
 					<span
-						class="whitespace-nowrap rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-white/90"
+						class="glass whitespace-nowrap rounded-full px-4 py-2 text-sm text-ink/90 transition-colors duration-120 hover:text-ink"
+						style="transition-timing-function: var(--ease-spring);"
 					>
 						{pill}
 					</span>

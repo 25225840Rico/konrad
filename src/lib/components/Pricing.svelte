@@ -4,11 +4,11 @@
 	import { reveal } from '$lib/reveal';
 </script>
 
-<section id="precios" class="py-20 lg:py-28 bg-surface">
+<section id="precios" class="py-20 lg:py-28">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Header -->
 		<div class="text-center mb-14" use:reveal>
-			<p class="text-accent uppercase text-sm font-semibold tracking-widest mb-3">Inversión</p>
+			<p class="eyebrow">Inversión</p>
 			<h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">Planes y precios</h2>
 			<p class="text-muted text-lg max-w-2xl mx-auto">
 				Precios en UF, transparentes y sin sorpresas. Elige el plan que se ajusta a tu proyecto.
@@ -19,17 +19,17 @@
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
 			{#each plans as plan}
 				<div
-					class="relative flex flex-col rounded-2xl p-8 bg-white border h-full transition-transform duration-300
+					class="relative glass rounded-3xl p-8 flex flex-col h-full
 						{plan.featured
-						? 'border-2 border-accent lg:scale-105 shadow-xl'
-						: 'border-slate-200 shadow-sm'}"
+						? 'shadow-glow ring-1 ring-accent/40 lg:scale-105'
+						: ''}"
 					use:reveal
 				>
 					<!-- Featured badge -->
 					{#if plan.featured && plan.badge}
 						<div class="absolute -top-4 left-1/2 -translate-x-1/2">
 							<span
-								class="bg-accent text-primary text-xs font-bold rounded-full px-4 py-1.5 whitespace-nowrap shadow"
+								class="bg-accent text-primary text-xs font-bold rounded-full px-3 py-1 whitespace-nowrap"
 							>
 								{plan.badge}
 							</span>
@@ -53,7 +53,7 @@
 					</ul>
 
 					<!-- Ideal para -->
-					<p class="text-sm text-muted mt-auto mb-5">
+					<p class="text-faint text-sm mt-auto mb-5">
 						<span class="font-medium">Ideal para:</span>
 						{plan.ideal}
 					</p>
@@ -61,10 +61,7 @@
 					<!-- CTA -->
 					<a
 						href="#contacto"
-						class="block rounded-lg px-5 py-3 font-semibold w-full text-center transition-opacity hover:opacity-90
-							{plan.featured
-							? 'bg-accent text-primary'
-							: 'bg-primary text-white'}"
+						class="{plan.featured ? 'btn-accent' : 'btn-glass'} w-full block text-center"
 					>
 						{plan.featured ? 'Contratar' : 'Empezar'}
 					</a>

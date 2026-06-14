@@ -41,14 +41,12 @@
 	}
 </script>
 
-<section id="contacto" class="py-20 lg:py-28 bg-surface">
+<section id="contacto" class="py-20 lg:py-28">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
 		<!-- Encabezado -->
 		<div class="text-center mb-12" use:reveal>
-			<p class="text-accent uppercase tracking-wide text-sm font-semibold mb-3">
-				Contáctanos
-			</p>
+			<p class="eyebrow justify-center mb-3">Contáctanos</p>
 			<h2 class="text-3xl sm:text-4xl font-bold text-ink mb-4">
 				Hablemos de tu proyecto
 			</h2>
@@ -61,11 +59,11 @@
 		<div class="grid grid-cols-1 lg:grid-cols-2 gap-10" use:reveal>
 
 			<!-- IZQUIERDA: Formulario -->
-			<div>
+			<div class="glass rounded-3xl p-8">
 				{#if status === 'success'}
 					<div
 						transition:fade={{ duration: 300 }}
-						class="bg-emerald-50 text-emerald-800 rounded-lg p-6 text-base font-medium"
+						class="bg-emerald-400/10 border border-emerald-400/30 text-emerald-200 rounded-xl p-4 text-base font-medium"
 						role="alert"
 					>
 						¡Gracias! Te responderemos dentro de 24 horas.
@@ -89,30 +87,28 @@
 								required
 								bind:value={name}
 								placeholder="Tu nombre"
-								class="w-full rounded-lg border border-slate-300 px-4 py-3
-								       focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-								       text-ink placeholder:text-muted bg-white transition-colors"
+								class="w-full rounded-xl bg-white/5 border border-white/15 text-ink placeholder:text-faint px-4 py-3
+								       focus:border-accent focus:outline-none transition-colors duration-120"
 								aria-describedby={errors.name ? 'contact-name-error' : undefined}
 								aria-invalid={!!errors.name}
 							/>
 							{#if errors.name}
-								<p id="contact-name-error" class="text-red-600 text-sm mt-1">{errors.name}</p>
+								<p id="contact-name-error" class="text-red-400 text-sm mt-1">{errors.name}</p>
 							{/if}
 						</div>
 
 						<!-- Empresa -->
 						<div>
 							<label for="contact-company" class="block text-sm font-medium text-ink mb-1">
-								Empresa <span class="text-muted text-xs">(opcional)</span>
+								Empresa <span class="text-faint text-xs">(opcional)</span>
 							</label>
 							<input
 								id="contact-company"
 								type="text"
 								bind:value={company}
 								placeholder="Nombre de tu empresa"
-								class="w-full rounded-lg border border-slate-300 px-4 py-3
-								       focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-								       text-ink placeholder:text-muted bg-white transition-colors"
+								class="w-full rounded-xl bg-white/5 border border-white/15 text-ink placeholder:text-faint px-4 py-3
+								       focus:border-accent focus:outline-none transition-colors duration-120"
 							/>
 						</div>
 
@@ -127,30 +123,28 @@
 								required
 								bind:value={email}
 								placeholder="tu@email.com"
-								class="w-full rounded-lg border border-slate-300 px-4 py-3
-								       focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-								       text-ink placeholder:text-muted bg-white transition-colors"
+								class="w-full rounded-xl bg-white/5 border border-white/15 text-ink placeholder:text-faint px-4 py-3
+								       focus:border-accent focus:outline-none transition-colors duration-120"
 								aria-describedby={errors.email ? 'contact-email-error' : undefined}
 								aria-invalid={!!errors.email}
 							/>
 							{#if errors.email}
-								<p id="contact-email-error" class="text-red-600 text-sm mt-1">{errors.email}</p>
+								<p id="contact-email-error" class="text-red-400 text-sm mt-1">{errors.email}</p>
 							{/if}
 						</div>
 
 						<!-- Teléfono -->
 						<div>
 							<label for="contact-phone" class="block text-sm font-medium text-ink mb-1">
-								Teléfono <span class="text-muted text-xs">(opcional)</span>
+								Teléfono <span class="text-faint text-xs">(opcional)</span>
 							</label>
 							<input
 								id="contact-phone"
 								type="tel"
 								bind:value={phone}
 								placeholder="+56 9 1234 5678"
-								class="w-full rounded-lg border border-slate-300 px-4 py-3
-								       focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-								       text-ink placeholder:text-muted bg-white transition-colors"
+								class="w-full rounded-xl bg-white/5 border border-white/15 text-ink placeholder:text-faint px-4 py-3
+								       focus:border-accent focus:outline-none transition-colors duration-120"
 							/>
 						</div>
 
@@ -162,13 +156,12 @@
 							<select
 								id="contact-type"
 								bind:value={projectType}
-								class="w-full rounded-lg border border-slate-300 px-4 py-3
-								       focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-								       text-ink bg-white transition-colors appearance-none"
+								class="w-full rounded-xl bg-white/5 border border-white/15 text-ink px-4 py-3
+								       focus:border-accent focus:outline-none transition-colors duration-120 appearance-none"
 							>
-								<option value="" disabled selected>Selecciona una opción…</option>
+								<option value="" disabled selected class="bg-primary text-faint">Selecciona una opción…</option>
 								{#each projectTypes as pt}
-									<option value={pt}>{pt}</option>
+									<option value={pt} class="bg-primary text-ink">{pt}</option>
 								{/each}
 							</select>
 						</div>
@@ -184,14 +177,13 @@
 								rows={4}
 								bind:value={message}
 								placeholder="Cuéntanos sobre tu proyecto…"
-								class="w-full rounded-lg border border-slate-300 px-4 py-3
-								       focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent
-								       text-ink placeholder:text-muted bg-white transition-colors resize-y"
+								class="w-full rounded-xl bg-white/5 border border-white/15 text-ink placeholder:text-faint px-4 py-3
+								       focus:border-accent focus:outline-none transition-colors duration-120 resize-y"
 								aria-describedby={errors.message ? 'contact-message-error' : undefined}
 								aria-invalid={!!errors.message}
 							></textarea>
 							{#if errors.message}
-								<p id="contact-message-error" class="text-red-600 text-sm mt-1">{errors.message}</p>
+								<p id="contact-message-error" class="text-red-400 text-sm mt-1">{errors.message}</p>
 							{/if}
 						</div>
 
@@ -199,10 +191,8 @@
 						<button
 							type="submit"
 							disabled={status === 'loading'}
-							class="bg-accent text-primary font-semibold rounded-lg px-6 py-3 w-full
-							       hover:brightness-95 transition-all duration-200
-							       disabled:opacity-60 disabled:cursor-not-allowed
-							       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+							class="btn-accent w-full py-4 text-base
+							       disabled:opacity-60 disabled:cursor-not-allowed"
 						>
 							{status === 'loading' ? 'Enviando…' : 'Enviar mensaje'}
 						</button>
@@ -212,8 +202,8 @@
 
 			<!-- DERECHA: Datos de contacto -->
 			<div class="flex items-start">
-				<div class="bg-primary rounded-2xl p-8 w-full text-white flex flex-col gap-6">
-					<h3 class="text-xl font-bold text-white mb-2">Información de contacto</h3>
+				<div class="glass rounded-3xl p-8 w-full flex flex-col gap-6">
+					<h3 class="text-xl font-bold text-ink mb-2">Información de contacto</h3>
 
 					<!-- WhatsApp -->
 					<div class="flex items-center gap-3">
@@ -224,7 +214,7 @@
 							href={contact.whatsapp}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-white/90 hover:text-accent transition-colors duration-150 text-sm"
+							class="text-ink hover:text-accent transition-colors duration-120 text-sm"
 						>
 							{contact.whatsappLabel}
 						</a>
@@ -237,7 +227,7 @@
 						</span>
 						<a
 							href={`mailto:${contact.email}`}
-							class="text-white/90 hover:text-accent transition-colors duration-150 text-sm"
+							class="text-ink hover:text-accent transition-colors duration-120 text-sm"
 						>
 							{contact.email}
 						</a>
@@ -248,7 +238,7 @@
 						<span class="text-accent shrink-0">
 							<Icon name="map" class="w-5 h-5" />
 						</span>
-						<span class="text-white/90 text-sm">{contact.city}</span>
+						<span class="text-ink text-sm">{contact.city}</span>
 					</div>
 
 					<!-- Horario -->
@@ -256,7 +246,7 @@
 						<span class="text-accent shrink-0">
 							<Icon name="clock" class="w-5 h-5" />
 						</span>
-						<span class="text-white/90 text-sm">{contact.hours}</span>
+						<span class="text-ink text-sm">{contact.hours}</span>
 					</div>
 				</div>
 			</div>
