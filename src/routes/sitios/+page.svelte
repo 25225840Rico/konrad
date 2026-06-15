@@ -8,6 +8,7 @@
 	import Icon from '$lib/Icon.svelte';
 	import { siteTypes, faqs } from '$lib/data';
 	import { SITE } from '$lib/seo/site';
+	import { base } from '$app/paths';
 
 	const description =
 		'Tipos de sitio web que desarrollamos en CoreWerk: landing pages, sitios corporativos, e-commerce, portafolios, blogs, SaaS y más. Diseño profesional desde USD 400, para empresas de Antofagasta y todo Chile.';
@@ -59,7 +60,7 @@
 >
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{#each siteTypes as site}
-			<a href={`/sitios/${site.slug}/`} class="glass-card group flex flex-col p-6">
+			<a href={`${base}/sitios/${site.slug}/`} class="glass-card group flex flex-col p-6">
 				<span class="mb-4 inline-flex text-accent">
 					<Icon name={site.icon} class="h-7 w-7" />
 				</span>

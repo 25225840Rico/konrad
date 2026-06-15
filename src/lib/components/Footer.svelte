@@ -2,6 +2,7 @@
 	import { contact, ciudadesChile, siteTypes } from '$lib/data';
 	import { WA_LINK } from '$lib/seo/site';
 	import Icon from '$lib/Icon.svelte';
+	import { base } from '$app/paths';
 
 	const year = new Date().getFullYear();
 	const cities = ciudadesChile.slice(0, 8);
@@ -37,7 +38,7 @@
 					{#each siteTypes as site}
 						<li>
 							<a
-								href={`/sitios/${site.slug}/`}
+								href={`${base}/sitios/${site.slug}/`}
 								class="transition-colors hover:text-accent"
 							>
 								{site.name}
@@ -51,9 +52,9 @@
 			<div>
 				<h3 class="text-xs font-bold uppercase tracking-[0.18em] text-accent">IA & Agentes</h3>
 				<ul class="mt-4 space-y-2 text-sm text-ink">
-					<li><a href="/inteligencia-artificial/" class="transition-colors hover:text-accent">Agentes IA</a></li>
-					<li><a href="/servicios/" class="transition-colors hover:text-accent">Servicios Digitales</a></li>
-					<li><a href="/servicios-basicos/" class="transition-colors hover:text-accent">Servicios Básicos</a></li>
+					<li><a href="{base}/inteligencia-artificial/" class="transition-colors hover:text-accent">Agentes IA</a></li>
+					<li><a href="{base}/servicios/" class="transition-colors hover:text-accent">Servicios Digitales</a></li>
+					<li><a href="{base}/servicios-basicos/" class="transition-colors hover:text-accent">Servicios Básicos</a></li>
 				</ul>
 			</div>
 
@@ -61,10 +62,10 @@
 			<div>
 				<h3 class="text-xs font-bold uppercase tracking-[0.18em] text-accent">Empresa</h3>
 				<ul class="mt-4 space-y-2 text-sm text-ink">
-					<li><a href="/nosotros/" class="transition-colors hover:text-accent">Sobre nosotros</a></li>
-					<li><a href="/portafolio/" class="transition-colors hover:text-accent">Portafolio</a></li>
-					<li><a href="/contacto/" class="transition-colors hover:text-accent">Contacto</a></li>
-					<li><a href="/blog/" class="transition-colors hover:text-accent">Blog</a></li>
+					<li><a href="{base}/nosotros/" class="transition-colors hover:text-accent">Sobre nosotros</a></li>
+					<li><a href="{base}/portafolio/" class="transition-colors hover:text-accent">Portafolio</a></li>
+					<li><a href="{base}/contacto/" class="transition-colors hover:text-accent">Contacto</a></li>
+					<li><a href="{base}/blog/" class="transition-colors hover:text-accent">Blog</a></li>
 				</ul>
 			</div>
 		</div>

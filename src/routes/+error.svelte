@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import Icon from '$lib/Icon.svelte';
 </script>
 
@@ -19,9 +20,9 @@
 			: 'Ocurrió un error inesperado. Intenta de nuevo o vuelve al inicio.'}
 	</p>
 	<div class="flex flex-wrap items-center justify-center gap-4">
-		<a href="/" class="btn-accent">
+		<a href="{base}/" class="btn-accent">
 			<Icon name="arrow" class="h-5 w-5 -scale-x-100" /> Volver al inicio
 		</a>
-		<a href="/#contacto" class="btn-glass">Contactar a Konrad</a>
+		<a href="{base}/#contacto" class="btn-glass">Contactar a Konrad</a>
 	</div>
 </main>

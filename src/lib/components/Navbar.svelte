@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import Icon from '$lib/Icon.svelte';
 	import { WA_LINK, siteTypes, aiAgents, serviciosBasicos, portfolioItems } from '$lib/data';
 
@@ -24,6 +25,9 @@
 		{ id: 'portafolio', label: 'Portafolio & Demos' },
 		{ id: 'nosotros', label: 'Nosotros', href: '/nosotros/' }
 	];
+
+	// Helper: prefix internal hrefs with base path
+	const lk = (h: string | undefined) => (h && h.startsWith('/') ? base + h : h);
 
 	function openMenu(id: string) {
 		activeMenu = id;
@@ -123,7 +127,7 @@
 	<div class="container-w flex items-center justify-between h-16">
 
 		<!-- Logo -->
-		<a href="/" class="flex items-center gap-0 shrink-0">
+		<a href="{base}/" class="flex items-center gap-0 shrink-0">
 			<span class="text-xl font-black text-ink">Core</span>
 			<span class="text-2xl font-black text-accent leading-none">·</span>
 			<span class="text-xl font-black text-accent">Werk</span>
@@ -135,7 +139,7 @@
 				{#if item.href}
 					<!-- Direct link (Nosotros) -->
 					<a
-						href={item.href}
+						href={lk(item.href)}
 						class="relative px-4 py-5 text-sm font-medium text-ink/80 hover:text-ink transition-colors duration-200"
 					>
 						{item.label}
@@ -214,7 +218,7 @@
 								<div class="grid grid-cols-3 gap-2">
 									{#each siteTypes as site}
 										<a
-											href="/sitios/{site.slug}/"
+											href="{base}/sitios/{site.slug}/"
 											class="glass-nav p-4 flex gap-3 items-start group"
 											onclick={closeMenu}
 										>
@@ -298,7 +302,7 @@
 									</ul>
 									<div class="mt-auto flex flex-col gap-2">
 										<a
-											href="/inteligencia-artificial/agentes-a-medida/"
+											href="{base}/inteligencia-artificial/agentes-a-medida/"
 											class="btn-ai text-xs py-2"
 											onclick={closeMenu}
 										>
@@ -326,7 +330,7 @@
 										{ label: 'Consultoría IA', price: 'USD 500', href: '/inteligencia-artificial/consultoria-ia/' }
 									] as card}
 										<a
-											href={card.href}
+											href={lk(card.href)}
 											class="glass-nav p-4 flex items-center justify-between group"
 											onclick={closeMenu}
 										>
@@ -356,7 +360,7 @@
 										</div>
 									</div>
 									<a
-										href="/contacto/"
+										href="{base}/contacto/"
 										class="btn-ai text-xs py-2 mt-auto"
 										onclick={closeMenu}
 									>
@@ -386,7 +390,7 @@
 										{ name: 'Branding', desc: 'Logo, paleta y manual de identidad visual', href: '/servicios-basicos/logo-branding/' }
 									] as item}
 										<a
-											href={item.href}
+											href={lk(item.href)}
 											class="glass-nav p-3 flex flex-col group block"
 											onclick={closeMenu}
 										>
@@ -408,7 +412,7 @@
 										{ name: 'Email Marketing', desc: 'Secuencias automatizadas que nutren y convierten', href: '/servicios/email-marketing/' }
 									] as item}
 										<a
-											href={item.href}
+											href={lk(item.href)}
 											class="glass-nav p-3 flex flex-col group block"
 											onclick={closeMenu}
 										>
@@ -430,7 +434,7 @@
 										{ name: 'Actualizaciones', desc: 'Cambios rápidos sin contratos ni complicaciones', href: '/servicios-basicos/actualizacion-contenido/' }
 									] as item}
 										<a
-											href={item.href}
+											href={lk(item.href)}
 											class="glass-nav p-3 flex flex-col group block"
 											onclick={closeMenu}
 										>
@@ -461,7 +465,7 @@
 						<div class="grid grid-cols-5 gap-3 mb-6">
 							{#each serviciosBasicos as s}
 								<a
-									href="/servicios-basicos/{s.slug}/"
+									href="{base}/servicios-basicos/{s.slug}/"
 									class="glass-nav p-5 flex flex-col items-start group"
 									onclick={closeMenu}
 								>
@@ -477,7 +481,7 @@
 						<div class="flex items-center justify-between">
 							<p class="text-sm text-muted">Sin contratos largos. Sin compromisos.</p>
 							<a
-								href="/servicios-basicos/"
+								href="{base}/servicios-basicos/"
 								class="btn-ghost text-sm"
 								onclick={closeMenu}
 							>
@@ -499,7 +503,7 @@
 								<h3 class="text-lg font-bold text-ink">Demos reales — no mockups</h3>
 							</div>
 							<a
-								href="/portafolio/"
+								href="{base}/portafolio/"
 								class="btn-ghost text-sm"
 								onclick={closeMenu}
 							>
@@ -553,7 +557,7 @@
 					{#if item.href}
 						<!-- Direct link -->
 						<a
-							href={item.href}
+							href={lk(item.href)}
 							class="px-6 py-4 text-sm font-semibold text-ink border-b border-white/5 hover:text-accent hover:bg-white/3 transition-colors"
 							onclick={() => { mobileOpen = false; mobileExpanded = null; }}
 						>
@@ -580,7 +584,7 @@
 								<div class="bg-secondary/40 px-4 pb-4">
 									{#each (mobileSubItems[item.id] ?? []) as sub}
 										<a
-											href={sub.href}
+											href={lk(sub.href)}
 											class="flex items-center justify-between py-3 px-2 text-sm text-ink/80 hover:text-accent border-b border-white/5 last:border-0 transition-colors"
 											onclick={() => { mobileOpen = false; mobileExpanded = null; }}
 										>

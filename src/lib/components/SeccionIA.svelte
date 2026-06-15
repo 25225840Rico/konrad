@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import Icon from '$lib/Icon.svelte';
 	import { aiAgents, WA_LINK } from '$lib/data';
 
@@ -70,7 +71,7 @@
 					de negocio.
 				</p>
 				<a
-					href="/inteligencia-artificial/agentes-a-medida/"
+					href="{base}/inteligencia-artificial/agentes-a-medida/"
 					class="btn-ai inline-flex text-sm font-bold"
 				>
 					Ver agentes disponibles →

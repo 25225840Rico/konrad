@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import Icon from '$lib/Icon.svelte';
 	import { serviciosBasicos } from '$lib/data';
 
@@ -51,7 +52,7 @@
 		<div class="mt-16 grid auto-rows-[400px] gap-6 sm:grid-cols-2 lg:grid-cols-5">
 			{#each serviciosBasicos as service, i}
 				<a
-					href="/servicios-basicos/{service.slug}/"
+					href="{base}/servicios-basicos/{service.slug}/"
 					bind:this={revealEls[i]}
 					class="reveal glass-card group flex flex-col justify-between p-6"
 				>
@@ -85,7 +86,7 @@
 
 		<!-- CTA General -->
 		<div class="mt-14 text-center">
-			<a href="/servicios-basicos/" class="btn-accent">
+			<a href="{base}/servicios-basicos/" class="btn-accent">
 				Ver paquetes básicos →
 			</a>
 		</div>

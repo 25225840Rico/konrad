@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { reveal } from '$lib/reveal';
 	import { portfolioItems } from '$lib/data';
 
@@ -61,7 +62,7 @@
 
 		<!-- CTA -->
 		<div class="mt-16 flex justify-center">
-			<a href="/portafolio/" class="btn-accent">
+			<a href="{base}/portafolio/" class="btn-accent">
 				Ver portafolio →
 			</a>
 		</div>

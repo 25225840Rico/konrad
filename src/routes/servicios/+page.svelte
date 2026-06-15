@@ -7,6 +7,7 @@
 	import CTAInterior from '$lib/components/interior/CTAInterior.svelte';
 	import Icon from '$lib/Icon.svelte';
 	import { SITE } from '$lib/seo/site';
+	import { base } from '$app/paths';
 
 	const description =
 		'Servicios de marketing digital y desarrollo web: diseño web, SEO, Google Ads, email marketing, mantención web y más. Desde USD 400 para empresas de Antofagasta y todo Chile.';
@@ -136,7 +137,7 @@
 >
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 		{#each servicios as servicio}
-			<a href={`/servicios/${servicio.slug}/`} class="glass-card group flex h-full flex-col p-6">
+			<a href={`${base}/servicios/${servicio.slug}/`} class="glass-card group flex h-full flex-col p-6">
 				<span class="mb-4 inline-flex text-accent">
 					<Icon name={servicio.icon} class="h-7 w-7" />
 				</span>

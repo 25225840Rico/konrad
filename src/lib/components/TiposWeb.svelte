@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import Icon from '$lib/Icon.svelte';
 	import { siteTypes } from '$lib/data';
 
@@ -51,7 +52,7 @@
 		<div class="mt-16 bento-grid">
 			{#each siteTypes as site, i}
 				<a
-					href="/sitios/{site.slug}/"
+					href="{base}/sitios/{site.slug}/"
 					bind:this={revealEls[i]}
 					class="reveal glass-card group bento-item relative flex flex-col justify-between gap-4 p-6"
 					data-index={i}

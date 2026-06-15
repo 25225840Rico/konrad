@@ -9,6 +9,7 @@
 	import Icon from '$lib/Icon.svelte';
 	import { aiAgents } from '$lib/data';
 	import { SITE } from '$lib/seo/site';
+	import { base } from '$app/paths';
 
 	const description =
 		'Agentes de Inteligencia Artificial a medida para empresas chilenas. Automatiza ventas, atención, RRHH, operaciones y documentos con IA desde USD 1.500. CoreWerk, Antofagasta.';
@@ -193,7 +194,7 @@
 >
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{#each aiAgents as agent}
-			<a href="/inteligencia-artificial/agentes-a-medida/" class="glass-card-ai group flex flex-col p-6">
+			<a href="{base}/inteligencia-artificial/agentes-a-medida/" class="glass-card-ai group flex flex-col p-6">
 				<span class="mb-4 inline-flex text-accentAI">
 					<Icon name={agent.icon} class="h-7 w-7" />
 				</span>

@@ -1,7 +1,11 @@
 <script lang="ts">
 	import Icon from '$lib/Icon.svelte';
 	import { reveal } from '$lib/reveal';
+	import { base } from '$app/paths';
 	import { WA_LINK } from '$lib/seo/site';
+
+	// Prefija el base path (p. ej. /corewerk en GitHub Pages) solo a enlaces internos.
+	const lk = (h?: string) => (h && h.startsWith('/') ? base + h : h);
 
 	interface Crumb {
 		label: string;
@@ -50,7 +54,7 @@
 					{#each breadcrumbs as crumb, i}
 						<li class="flex items-center gap-2">
 							{#if crumb.href}
-								<a href={crumb.href} class="transition-colors {ai ? 'hover:text-accentAI' : 'hover:text-accent'}">{crumb.label}</a>
+								<a href={lk(crumb.href)} class="transition-colors {ai ? 'hover:text-accentAI' : 'hover:text-accent'}">{crumb.label}</a>
 							{:else}
 								<span class="text-ink/70">{crumb.label}</span>
 							{/if}
@@ -96,7 +100,7 @@
 
 			<div class="mt-10 flex flex-wrap gap-3">
 				<a
-					href={ctaPrimary.href}
+					href={lk(ctaPrimary.href)}
 					target={ctaPrimary.external ? '_blank' : undefined}
 					rel={ctaPrimary.external ? 'noopener noreferrer' : undefined}
 					class={ai ? 'btn-ai' : 'btn-accent'}
@@ -106,7 +110,7 @@
 				</a>
 				{#if ctaSecondary}
 					<a
-						href={ctaSecondary.href}
+						href={lk(ctaSecondary.href)}
 						target={ctaSecondary.external ? '_blank' : undefined}
 						rel={ctaSecondary.external ? 'noopener noreferrer' : undefined}
 						class="btn-ghost"

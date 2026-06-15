@@ -5,6 +5,7 @@
 	import Icon from '$lib/Icon.svelte';
 	import { serviciosBasicos } from '$lib/data';
 	import { SITE } from '$lib/seo/site';
+	import { base } from '$app/paths';
 
 	const description =
 		'Servicios Básicos para tu presencia digital en Chile: Logo y Branding, Email Corporativo, Hosting y Dominio, Mantención Mensual, Actualización de Contenido. Precios desde USD 8/mes. CoreWerk Antofagasta.';
@@ -57,7 +58,7 @@
 >
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		{#each serviciosBasicos as servicio}
-			<a href={`/servicios-basicos/${servicio.slug}/`} class="glass-card group flex h-full flex-col p-6">
+			<a href={`${base}/servicios-basicos/${servicio.slug}/`} class="glass-card group flex h-full flex-col p-6">
 				<span class="mb-4 inline-flex text-3xl">
 					{servicio.emoji}
 				</span>
